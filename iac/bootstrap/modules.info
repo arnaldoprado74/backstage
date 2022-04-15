@@ -1,0 +1,7 @@
+container-svc
+envvars
+networking
+postgres-db
+resgrp
+security-sg
+storage-account-basic

@@ -1,0 +1,3 @@
+[submodule "oss/backstage"]
+	path = oss/backstage
+	url = https://github.com/backstage/backstage.git

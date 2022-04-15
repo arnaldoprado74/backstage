@@ -1,0 +1,1 @@
+export P_SECRETS='{admin_pass="Backstage#portal#22", cert_pass="Backstage#portal#22", core_db_pass="Backstageportal22", subscription_key="eed7793f-216a-4d5f-8650-23329c6ab0b5", tenant_id="a6605220-eae4-4901-996c-021a42d517a2"}'
