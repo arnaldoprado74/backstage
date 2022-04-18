@@ -61,8 +61,8 @@ jobs:
       - name: Where am i
         run: echo "`pwd`"
         
-      - name: Set branch
-        run: export GIT_BRANCH=$(echo ${GITHUB_REF:-dev} | sed s/.*\\///g)
+      - name: Find dockerfile
+        run: find . -type f -iname Dockerfile
         
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
