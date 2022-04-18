@@ -62,7 +62,7 @@ jobs:
         run: echo "`pwd`"
         
       - name: Find dockerfile
-        run: find . -type f -iname Dockerfile
+        run: echo "`find . -type f -iname Dockerfile | xargs`"
         
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
