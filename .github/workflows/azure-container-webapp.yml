@@ -41,6 +41,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -60,9 +62,6 @@ jobs:
         
       - name: Where am i
         run: echo "`pwd`"
-        
-      - name: Find dockerfile
-        run: echo "'find . -type f -iname Dockerfile | xargs'"
         
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
