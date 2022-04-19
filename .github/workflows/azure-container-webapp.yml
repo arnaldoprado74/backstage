@@ -60,15 +60,15 @@ jobs:
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}
         
-      - name: Where am i
-        run: echo "`pwd`"
+      - name: Link where am i
+        run: ln -s /home/runner/work/backstage/backstage/oss/backstage/packages/backend/Dockerfile 
         
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
-          file: /home/runner/work/backstage/backstage/oss/backstage/packages/backend/Dockerfile
+          file: ./Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
