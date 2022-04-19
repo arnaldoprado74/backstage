@@ -68,7 +68,7 @@ jobs:
         with:
           push: true
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
-          file: ${GITHUB_WORKSPACE}/packages/backend/Dockerfile
+          file: /home/runner/work/backstage/backstage/oss/backstage/packages/backend/Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
