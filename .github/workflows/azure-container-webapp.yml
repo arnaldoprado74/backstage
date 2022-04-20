@@ -58,7 +58,7 @@ jobs:
         run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
         
       - name: Branch name
-        run: echo running on branch ${GITHUB_REF##*/} for ${{defaultContext}}
+        run: echo running on branch ${GITHUB_REF##*/} 
            
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
