@@ -64,7 +64,7 @@ jobs:
         with:
           node-version: '16'
       
-      - run: npm build
+      - run: npm package build
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
