@@ -19,24 +19,27 @@ variable "company_name" {
 variable "admin_user" {
   type = string
 }
+variable "core_db_pass" {
+  type = string
+  sensitive = true
+}
 variable "psql_sku_name" {
   type = string
 }
 variable "psql_storage_mb" {
-  type = string
+  type = number
 }
 variable "psql_storage_backup_rd" {
-  type = string
+  type = number
 }
 variable "psql_storage_backup_geor" {
-  type = string
+  type = bool
 }
 variable "psql_version" {
   type = string
 }
 variable "psql_ssl_enforcement" {
-  type = string
-  default = null
+  type = bool
 }
 variable "subnet_id" {
   type = string

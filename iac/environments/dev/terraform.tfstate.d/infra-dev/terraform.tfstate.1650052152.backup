@@ -1,0 +1,51 @@
+{
+  "version": 4,
+  "terraform_version": "1.1.7",
+  "serial": 47,
+  "lineage": "249e1c0e-8837-58af-39fe-0de60c168969",
+  "outputs": {
+    "debug_string": {
+      "value": "",
+      "type": "string"
+    },
+    "location": {
+      "value": "westus2",
+      "type": "string"
+    },
+    "resource_group_name": {
+      "value": "dev",
+      "type": "string"
+    },
+    "vnet_id": {
+      "value": "/subscriptions/eed7793f-216a-4d5f-8650-23329c6ab0b5/resourceGroups/dev/providers/Microsoft.Network/virtualNetworks/vnet-dev",
+      "type": "string"
+    },
+    "vnet_name": {
+      "value": "vnet-dev",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "module": "module.resgrp[0]",
+      "mode": "managed",
+      "type": "azurerm_resource_group",
+      "name": "grp",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/eed7793f-216a-4d5f-8650-23329c6ab0b5/resourceGroups/dev",
+            "location": "westus2",
+            "name": "dev",
+            "tags": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo1NDAwMDAwMDAwMDAwLCJkZWxldGUiOjU0MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjo1NDAwMDAwMDAwMDAwfX0="
+        }
+      ]
+    }
+  ]
+}

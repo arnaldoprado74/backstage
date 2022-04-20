@@ -99,7 +99,7 @@ locals {
         }     
         dev = {
             resource_group_name                 = "dev"
-            location                            = "westus2"
+            location                            = "westus"
             operations_email                    = "arnaldo_prado@hotmail.com"
             env_ref                             = "dev"
 
