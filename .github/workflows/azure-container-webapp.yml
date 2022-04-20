@@ -64,8 +64,9 @@ jobs:
         with:
           node-version: '16'
       
-      - run: npm install @backstage/cli      
-      - run: npm --prefix oss/backstage run build
+      - run: npm --prefix oss/backstage install --global yarn
+      - run: yarn --cwd oss/backstage add @backstage/cli      
+      - run: yard --cwd oss/backstage run build
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
