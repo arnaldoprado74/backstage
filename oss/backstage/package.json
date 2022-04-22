@@ -81,6 +81,7 @@
     "jest-css-modules": "^2.1.0",
     "jest-transform-yaml": "^1.0.0",
     "buffer": "^6.0.3",
+    "npm-packlist": "^5.0.2",
     "msw": "^0.35.0",
     "yarn-lock-check": "^1.0.5"
   },
