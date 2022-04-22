@@ -82,6 +82,7 @@
     "jest-transform-yaml": "^1.0.0",
     "buffer": "^6.0.3",
     "npm-packlist": "^5.0.2",
+    "cpu-features": "^0.0.4",
     "msw": "^0.35.0",
     "yarn-lock-check": "^1.0.5"
   },
