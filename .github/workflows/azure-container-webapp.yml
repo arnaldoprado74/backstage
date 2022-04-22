@@ -66,7 +66,7 @@ jobs:
       
       - run: npm --prefix oss/backstage install --global yarn
       - run: yarn -W --cwd oss/backstage add -D npm-packlist msw jest jest-css-modules jest-transform-yaml
-      - run: yarn -W --cwd oss/backstage add @backstage/cli      
+      - run: yarn -W --cwd oss/backstage add msw jest jest-css-modules jest-transform-yaml buffer npm-packlist cpu-features @backstage/cli      
       - run: yard -W --cwd oss/backstage run build
 
       - name: Build and push container image to registry
