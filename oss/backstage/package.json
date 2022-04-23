@@ -55,11 +55,12 @@
     "@microsoft/api-documenter": "^7.17.5",
     "@microsoft/api-extractor": "^7.21.2",
     "@microsoft/api-extractor-model": "^7.16.1",
-    "@microsoft/tsdoc": "^0.14.1"
+    "@microsoft/tsdoc": "^0.14.1",
     "buffer": "^6.0.3",
     "npm-packlist": "^5.0.2",
     "cpu-features": "^0.0.4",
     "msw": "^0.35.0",
+    "yarn-lock-check": "^1.0.5"
   },
   "devDependencies": {
     "@changesets/cli": "^2.14.0",
