@@ -66,14 +66,21 @@ jobs:
       
       - run: npm --prefix oss/backstage install --global yarn
       - run: yarn -W --cwd oss/backstage add -D npm-packlist buffer npm-packlist msw jest jest-css-modules jest-transform-yaml cpu-features yarn-lock-check @backstage-cli
-#      - run: yarn -W --cwd oss/backstage add @backstage/cli      
       - run: yard -W --cwd oss/backstage run build
 
-      - name: Build and push container image to registry
+      - name: Build and push frontend container image to registry
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
+          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }},ghcr.io/${{ env.REPO }}-fe:${{ github.sha }}
+          file: oss/backstage/Dockerfile.hostbuild
+          context: oss/backstage
+
+      - name: Build and push backend container image to registry
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }},ghcr.io/${{ env.REPO }}-be:${{ github.sha }}
           file: oss/backstage/packages/backend/Dockerfile
           context: oss/backstage
   deploy:
