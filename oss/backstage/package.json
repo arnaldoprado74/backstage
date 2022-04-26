@@ -35,7 +35,7 @@
     "build-storybook": "yarn --cwd storybook build-storybook",
     "techdocs-cli": "node scripts/techdocs-cli.js",
     "techdocs-cli:dev": "cross-env TECHDOCS_CLI_DEV_MODE=true node scripts/techdocs-cli.js",
-    "prepare": "echo "`pwd`" && husky install ../..,
+    "prepare": cd ../../ && husky install oss/backstage
     "lock:check": "yarn-lock-check"
   },
   "workspaces": {
