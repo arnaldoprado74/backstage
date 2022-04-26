@@ -66,7 +66,7 @@ jobs:
       
       - run: npm --prefix oss/backstage install --global yarn
       - run: yarn -W --cwd oss/backstage add -D npm-packlist buffer npm-packlist msw jest jest-css-modules jest-transform-yaml cpu-features yarn-lock-check @backstage/cli
-      - run: yarn -W --cwd oss/backstage tsc
+      - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage tsc
       - run: yarn -W --cwd oss/backstage run build
 
       - name: Build and push frontend container image to registry
