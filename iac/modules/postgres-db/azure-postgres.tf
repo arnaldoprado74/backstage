@@ -24,15 +24,15 @@ resource "azurerm_postgresql_server" "psqlserver" {
   create_mode                       = "Default"  
 }
 
-resource "azurerm_postgresql_virtual_network_rule" "psql_vnet_rule" {
-  count  = contains(var.selected_providers, local.cloud_provider) ? 1 : 0
+# resource "azurerm_postgresql_virtual_network_rule" "psql_vnet_rule" {
+#   count  = contains(var.selected_providers, local.cloud_provider) ? 1 : 0
 
-  name                                 = join("-", ["vnet", "rule", var.environment])
-  resource_group_name                  = var.resource_group_name
-  server_name                          = one(azurerm_postgresql_server.psqlserver[*].name)
-  subnet_id                            = var.subnet_id
-  ignore_missing_vnet_service_endpoint = true
-}
+#   name                                 = join("-", ["vnet", "rule", var.environment])
+#   resource_group_name                  = var.resource_group_name
+#   server_name                          = one(azurerm_postgresql_server.psqlserver[*].name)
+#   subnet_id                            = var.subnet_id
+#   ignore_missing_vnet_service_endpoint = true
+# }
 
 resource "azurerm_postgresql_database" "psqldb" {
   count  = contains(var.selected_providers, local.cloud_provider) ? 1 : 0
