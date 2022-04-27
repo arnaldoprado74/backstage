@@ -16,7 +16,7 @@ locals {
 }
 
 data "azurerm_container_registry" "acr" {
-  name                = join("", [var.prefix, "acr", var.environment])
+  name                = var.registry_name
   resource_group_name = var.resource_group_name
 }
 

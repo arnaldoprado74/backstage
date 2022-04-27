@@ -85,11 +85,11 @@ module "postgres-db-backstage" {
   company_name              = module.envvars.company_name
   admin_user                = module.envvars.admin_user
   core_db_pass              = module.envvars.core_db_pass
-  psql_sku_name             = "GP_Gen5_4"
+  psql_sku_name             = "B_Gen5_2"
   psql_version              = "9.6"
   psql_storage_mb           = 65536
   psql_storage_backup_rd    = 7 # retention days
-  psql_storage_backup_geor  = true
+  psql_storage_backup_geor  = false
   psql_ssl_enforcement      = true
   subnet_id                 = one(module.networking[*].subnet-B-id)
 }
@@ -119,4 +119,20 @@ module "container-service" {
   company_name              = module.envvars.company_name
   admin_user                = module.envvars.admin_user
   subnet_id                 = one(module.networking[*].subnet-B-id)
+  registry_name             = join("", ["bs", "acr", module.envvars.environment])
+}
+
+module "container-service-fe" {
+  count  = join("-", [module.envvars.WKSP_INFRA, module.envvars.environment]) == terraform.workspace ? 1 : 0
+  source = "../../modules/container-svc" 
+
+  selected_providers        = ["azure"]
+  prefix                    = "bsfe"
+  environment               = module.envvars.environment
+  resource_group_name       = module.envvars.resource_group_name
+  location                  = module.envvars.location
+  company_name              = module.envvars.company_name
+  admin_user                = module.envvars.admin_user
+  subnet_id                 = one(module.networking[*].subnet-B-id)
+  registry_name             = join("", ["bs", "acr", module.envvars.environment])
 }

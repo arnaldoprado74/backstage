@@ -22,3 +22,7 @@ variable "admin_user" {
 variable "subnet_id" {
   type = string
 }
+
+variable "registry_name" {
+  type = string
+}
