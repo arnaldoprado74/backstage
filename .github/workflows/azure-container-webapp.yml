@@ -77,16 +77,16 @@ jobs:
         with:
           push: true
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }},ghcr.io/${{ env.REPO }}-be:${{ github.sha }}
-          file: oss/backstage/packages/backend/Dockerfile
-          context: oss/backstage
+          file: ./oss/backstage/packages/backend/Dockerfile
+          context: .
 
       - name: Build and push frontend container image to registry
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }},ghcr.io/${{ env.REPO }}-fe:${{ github.sha }}
-          file: ./Dockerfile.hostbuild
-          context: oss/backstage
+          file: ./oss/backstage/Dockerfile.hostbuild
+          context: .
 
   deploy:
     runs-on: ubuntu-latest
