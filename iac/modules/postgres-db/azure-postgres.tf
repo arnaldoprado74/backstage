@@ -20,7 +20,7 @@ resource "azurerm_postgresql_server" "psqlserver" {
 
   # general default
   auto_grow_enabled                 = true
-  infrastructure_encryption_enabled = true
+  infrastructure_encryption_enabled = false
   create_mode                       = "Default"  
 }
 
