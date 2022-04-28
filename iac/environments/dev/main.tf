@@ -85,7 +85,7 @@ module "postgres-db-backstage" {
   company_name              = module.envvars.company_name
   admin_user                = module.envvars.admin_user
   core_db_pass              = module.envvars.core_db_pass
-  psql_sku_name             = "B_Gen5_2"
+  psql_sku_name             = "B_Gen5_1"
   psql_version              = "9.6"
   psql_storage_mb           = 65536
   psql_storage_backup_rd    = 7 # retention days
