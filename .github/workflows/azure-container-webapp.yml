@@ -115,4 +115,4 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPPFE_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPPFE_PUBLISH_PROFILE }}
-          images: 'ghcr.io/${{ env.REPO }}:${{ github.sha }}${{ env.FE_SUFFIX }}'
+          images: 'ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:${{ github.sha }}'
