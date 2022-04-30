@@ -21,9 +21,9 @@ RUN apt-get update && \
     yarn config set python /usr/bin/python3
 
 # Azure SSH
-COPY oss/backstage/backend/sshd_config /etc/ssh/
+COPY oss/backstage/packages/backend/sshd_config /etc/ssh/
 RUN /mkdir -p /tmp
-COPY oss/backstage/backend/ssh_setup /tmp
+COPY oss/backstage/packages/backend/ssh_setup /tmp
 RUN chmod +x /tmp/ssh_setup && \
     (sleep 1; /tmp/ssh_setup 2>&1 > /dev/null)
 EXPOSE 2222
