@@ -22,7 +22,7 @@ RUN apt-get update && \
 
 # Azure SSH
 COPY oss/backstage/packages/backend/sshd_config /etc/ssh/
-RUN /mkdir -p /tmp
+RUN mkdir -p /tmp
 COPY oss/backstage/packages/backend/ssh_setup /tmp
 RUN chmod +x /tmp/ssh_setup && \
     (sleep 1; /tmp/ssh_setup 2>&1 > /dev/null)
