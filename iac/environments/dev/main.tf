@@ -107,6 +107,10 @@ module "container-registry" {
   admin_user                = module.envvars.admin_user
 }
 
+resource "random_id" "backstage_secret" {
+  byte_length = 24
+}
+
 module "container-service" {
   count  = join("-", [module.envvars.WKSP_INFRA, module.envvars.environment]) == terraform.workspace ? 1 : 0
   source = "../../modules/container-svc" 
@@ -120,6 +124,13 @@ module "container-service" {
   admin_user                = module.envvars.admin_user
   subnet_id                 = one(module.networking[*].subnet-B-id)
   registry_name             = join("", ["bs", "acr", module.envvars.environment])
+  service_env               = {
+      POSTGRES_HOST     = one(module.postgres-db-backstage[*].server_name)
+      POSTGRES_PORT     = one(module.postgres-db-backstage[*].server_port)
+      POSTGRES_USER     = module.envvars.admin_user
+      POSTGRES_PASSWORD = module.envvars.core_db_pass
+      BACKEND_SECRET    = random_id.backstage_secret.b64_std
+  }
 }
 
 module "container-service-fe" {
@@ -135,4 +146,5 @@ module "container-service-fe" {
   admin_user                = module.envvars.admin_user
   subnet_id                 = one(module.networking[*].subnet-B-id)
   registry_name             = join("", ["bs", "acr", module.envvars.environment])
+  service_env               = {}
 }

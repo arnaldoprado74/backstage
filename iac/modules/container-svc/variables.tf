@@ -26,3 +26,7 @@ variable "subnet_id" {
 variable "registry_name" {
   type = string
 }
+
+variable "service_env" {
+  type = map
+}

@@ -2,17 +2,20 @@ locals {
   cloud_provider = "azure"
   app_name       = join("-", [var.prefix, "webapp", var.environment])
 
-  envariables    = {
-    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
-    "WEBSITES_PORT"                       = 8080
-    # "DOCKER_REGISTRY_SERVER_URL"          = data.azurerm_container_registry.acr.login_server
-    # "DOCKER_REGISTRY_SERVER_USERNAME"     = data.azurerm_container_registry.acr.admin_username
-    # "DOCKER_REGISTRY_SERVER_PASSWORD"     = data.azurerm_container_registry.acr.admin_password
-    "DOCKER_REGISTRY_SERVER_URL"          = "https://ghcr.io"
-    "DOCKER_REGISTRY_SERVER_USERNAME"     = "arnaldo.prado74"
-    "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"
-    "AZURE_WEBAPP_NAME"                   = local.app_name
-  }
+  envariables    = merge( 
+    {
+      "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
+      "WEBSITES_PORT"                       = 8080
+      # "DOCKER_REGISTRY_SERVER_URL"          = data.azurerm_container_registry.acr.login_server
+      # "DOCKER_REGISTRY_SERVER_USERNAME"     = data.azurerm_container_registry.acr.admin_username
+      # "DOCKER_REGISTRY_SERVER_PASSWORD"     = data.azurerm_container_registry.acr.admin_password
+      "DOCKER_REGISTRY_SERVER_URL"          = "https://ghcr.io"
+      "DOCKER_REGISTRY_SERVER_USERNAME"     = "arnaldo.prado74"
+      "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"
+      "AZURE_WEBAPP_NAME"                   = local.app_name
+    },
+    var.service_env
+  )
 }
 
 data "azurerm_container_registry" "acr" {
