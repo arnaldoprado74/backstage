@@ -29,7 +29,7 @@
 
 FROM nginx:mainline
 
-RUN apt-get update && apt-get -y install jq openssh && rm -rf /var/lib/apt/lists/* && echo "root:Docker!" | chpasswd
+RUN apt-get update && apt-get -y install jq openssh-server && rm -rf /var/lib/apt/lists/* && echo "root:Docker!" | chpasswd
 
 COPY oss/backstage/packages/app/dist /usr/share/nginx/html
 COPY oss/backstage/docker/default.conf.template /etc/nginx/templates/default.conf.template
@@ -37,9 +37,9 @@ COPY oss/backstage/docker/default.conf.template /etc/nginx/templates/default.con
 COPY oss/backstage/docker/inject-config.sh /docker-entrypoint.d/40-inject-config.sh
 
 # Azure SSH - uses backend files
-COPY oss/backstage/backend/sshd_config /etc/ssh/
-RUN /mkdir -p /tmp
-COPY oss/backstage/backend/ssh_setup /tmp
+COPY oss/backstage/packages/backend/sshd_config /etc/ssh/
+RUN mkdir -p /tmp
+COPY oss/backstage/packages/backend/ssh_setup /tmp
 RUN chmod +x /tmp/ssh_setup && \
     (sleep 1; /tmp/ssh_setup 2>&1 > /dev/null)
 EXPOSE 2222
