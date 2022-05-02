@@ -62,6 +62,13 @@ resource "azurerm_app_service" "webapp_container" {
     health_check_path = "/" # healthD check required in order that internal app service plan loadbalancer do not loadbalance on instance down
     ip_restriction {
      virtual_network_subnet_id = var.subnet_id
+     name = "BASE VNET"
+     priority =  65000
+    }
+    ip_restriction {
+      ip_address = "201.13.82.30/32"
+      name = "ANP"
+      priority =  300
     }
   }
 

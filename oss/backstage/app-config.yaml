@@ -1,7 +1,8 @@
 app:
-  title: Backstage Example App
-  baseUrl: http://localhost:3000
-  googleAnalyticsTrackingId: # UA-000000-0
+  title: Backstage Bradesco App
+  #baseUrl: http://localhost:3000
+  baseUrl: https://bs-webapp-dev.azurewebsites.net
+  #googleAnalyticsTrackingId: # UA-000000-0
   #datadogRum:
   #  clientToken: '123456789'
   #  applicationId: qwerty
@@ -51,76 +52,77 @@ backend:
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   reading:
     allow:
-      - host: example.com
+      - host: bs-webapp-dev.azurewebsites.net
+      - host: bsfe-webapp-dev.azurewebsites.net
       - host: '*.mozilla.org'
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
 
 # See README.md in the proxy-backend plugin for information on the configuration format
 proxy:
-  '/circleci/api':
-    target: https://circleci.com/api/v1.1
-    headers:
-      Circle-Token: ${CIRCLECI_AUTH_TOKEN}
+  # '/circleci/api':
+  #   target: https://circleci.com/api/v1.1
+  #   headers:
+  #     Circle-Token: ${CIRCLECI_AUTH_TOKEN}
 
-  '/jenkins/api':
-    target: http://localhost:8080
-    headers:
-      Authorization: ${JENKINS_BASIC_AUTH_HEADER}
+  # '/jenkins/api':
+  #   target: http://localhost:8080
+  #   headers:
+  #     Authorization: ${JENKINS_BASIC_AUTH_HEADER}
 
-  '/travisci/api':
-    target: https://api.travis-ci.com
-    changeOrigin: true
-    headers:
-      Authorization: ${TRAVISCI_AUTH_TOKEN}
-      travis-api-version: '3'
+  # '/travisci/api':
+  #   target: https://api.travis-ci.com
+  #   changeOrigin: true
+  #   headers:
+  #     Authorization: ${TRAVISCI_AUTH_TOKEN}
+  #     travis-api-version: '3'
 
-  '/newrelic/apm/api':
-    target: https://api.newrelic.com/v2
-    headers:
-      X-Api-Key: ${NEW_RELIC_REST_API_KEY}
+  # '/newrelic/apm/api':
+  #   target: https://api.newrelic.com/v2
+  #   headers:
+  #     X-Api-Key: ${NEW_RELIC_REST_API_KEY}
 
-  '/newrelic/api':
-    target: https://api.newrelic.com
-    headers:
-      X-Api-Key: ${NEW_RELIC_USER_KEY}
+  # '/newrelic/api':
+  #   target: https://api.newrelic.com
+  #   headers:
+  #     X-Api-Key: ${NEW_RELIC_USER_KEY}
 
-  '/pagerduty':
-    target: https://api.pagerduty.com
-    headers:
-      Authorization: Token token=${PAGERDUTY_TOKEN}
+  # '/pagerduty':
+  #   target: https://api.pagerduty.com
+  #   headers:
+  #     Authorization: Token token=${PAGERDUTY_TOKEN}
 
-  '/buildkite/api':
-    target: https://api.buildkite.com/v2/
-    headers:
-      Authorization: ${BUILDKITE_TOKEN}
+  # '/buildkite/api':
+  #   target: https://api.buildkite.com/v2/
+  #   headers:
+  #     Authorization: ${BUILDKITE_TOKEN}
 
-  '/sentry/api':
-    target: https://sentry.io/api/
-    allowedMethods: ['GET']
-    headers:
-      Authorization: ${SENTRY_TOKEN}
+  # '/sentry/api':
+  #   target: https://sentry.io/api/
+  #   allowedMethods: ['GET']
+  #   headers:
+  #     Authorization: ${SENTRY_TOKEN}
 
-  '/ilert':
-    target: https://api.ilert.com
-    allowedMethods: ['GET', 'POST', 'PUT']
-    allowedHeaders: ['Authorization']
-    headers:
-      Authorization: ${ILERT_AUTH_HEADER}
+  # '/ilert':
+  #   target: https://api.ilert.com
+  #   allowedMethods: ['GET', 'POST', 'PUT']
+  #   allowedHeaders: ['Authorization']
+  #   headers:
+  #     Authorization: ${ILERT_AUTH_HEADER}
 
-  '/airflow':
-    target: https://your.airflow.instance.com/api/v1
-    headers:
-      Authorization: ${AIRFLOW_BASIC_AUTH_HEADER}
+  # '/airflow':
+  #   target: https://your.airflow.instance.com/api/v1
+  #   headers:
+  #     Authorization: ${AIRFLOW_BASIC_AUTH_HEADER}
 
-  '/gocd':
-    target: https://your.gocd.instance.com/go/api
-    allowedMethods: ['GET']
-    allowedHeaders: ['Authorization']
-    headers:
-      Authorization: Basic ${GOCD_AUTH_CREDENTIALS}
+  # '/gocd':
+  #   target: https://your.gocd.instance.com/go/api
+  #   allowedMethods: ['GET']
+  #   allowedHeaders: ['Authorization']
+  #   headers:
+  #     Authorization: Basic ${GOCD_AUTH_CREDENTIALS}
 
 organization:
-  name: My Company
+  name: Bradesco
 
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 # Note: After experimenting with basic setup, use CI/CD to generate docs
@@ -136,10 +138,10 @@ techdocs:
     type: 'local' # Alternatives - 'googleGcs' or 'awsS3' or 'azureBlobStorage' or 'openStackSwift'. Read documentation for using alternatives.
 
 sentry:
-  organization: my-company
+  organization: Bradesco
 
 rollbar:
-  organization: my-company
+  organization: Bradesco
   # NOTE: The rollbar-backend & accountToken key may be deprecated in the future (replaced by a proxy config)
   accountToken: my-rollbar-account-token
 
@@ -178,10 +180,10 @@ integrations:
   gitlab:
     - host: gitlab.com
       token: ${GITLAB_TOKEN}
-  bitbucket:
-    - host: bitbucket.org
-      username: ${BITBUCKET_USERNAME}
-      appPassword: ${BITBUCKET_APP_PASSWORD}
+  # bitbucket:
+  #   - host: bitbucket.org
+  #     username: ${BITBUCKET_USERNAME}
+  #     appPassword: ${BITBUCKET_APP_PASSWORD}
     ### Example for how to add your bitbucket server instance using the API:
     # - host: server.bitbucket.com
     #   apiBaseUrl: server.bitbucket.com
@@ -193,10 +195,10 @@ integrations:
   #  googleGcs:
   #    clientEmail: 'example@example.com'
   #    privateKey: ${GCS_PRIVATE_KEY}
-  awsS3:
-    - host: amazonaws.com
-      accessKeyId: ${AWS_ACCESS_KEY_ID}
-      secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
+  # awsS3:
+  #   - host: amazonaws.com
+  #     accessKeyId: ${AWS_ACCESS_KEY_ID}
+  #     secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
 
 catalog:
   import:
@@ -310,78 +312,78 @@ auth:
   # session:
   #   secret: custom session secret
   providers:
-    google:
-      development:
-        clientId: ${AUTH_GOOGLE_CLIENT_ID}
-        clientSecret: ${AUTH_GOOGLE_CLIENT_SECRET}
-    github:
-      development:
-        clientId: ${AUTH_GITHUB_CLIENT_ID}
-        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
-        enterpriseInstanceUrl: ${AUTH_GITHUB_ENTERPRISE_INSTANCE_URL}
+    # google:
+    #   development:
+    #     clientId: ${AUTH_GOOGLE_CLIENT_ID}
+    #     clientSecret: ${AUTH_GOOGLE_CLIENT_SECRET}
+    # github:
+    #   development:
+    #     clientId: ${AUTH_GITHUB_CLIENT_ID}
+    #     clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+    #     enterpriseInstanceUrl: ${AUTH_GITHUB_ENTERPRISE_INSTANCE_URL}
     gitlab:
       development:
         clientId: ${AUTH_GITLAB_CLIENT_ID}
         clientSecret: ${AUTH_GITLAB_CLIENT_SECRET}
-        audience: ${GITLAB_BASE_URL}
-    saml:
-      entryPoint: 'http://localhost:7001/'
-      issuer: 'passport-saml'
-      cert: 'fake-cert-base64'
-    okta:
-      development:
-        clientId: ${AUTH_OKTA_CLIENT_ID}
-        clientSecret: ${AUTH_OKTA_CLIENT_SECRET}
-        audience: ${AUTH_OKTA_AUDIENCE}
-    oauth2:
-      development:
-        clientId: ${AUTH_OAUTH2_CLIENT_ID}
-        clientSecret: ${AUTH_OAUTH2_CLIENT_SECRET}
-        authorizationUrl: ${AUTH_OAUTH2_AUTH_URL}
-        tokenUrl: ${AUTH_OAUTH2_TOKEN_URL}
-        ###
-        # provide a list of scopes as needed for your OAuth2 Server:
-        #
-        # scope: saml-login-selector openid profile email
-    oidc:
-      # Note that you must define a session secret (see above) since the oidc provider requires session support.
-      # Note that by default, this provider will use the 'none' prompt which assumes that your are already logged on in the IDP.
-      # You should set prompt to:
-      # - auto: will let the IDP decide if you need to log on or if you can skip login when you have an active SSO session
-      # - login: will force the IDP to always present a login form to the user
-      development:
-        metadataUrl: ${AUTH_OIDC_METADATA_URL}
-        clientId: ${AUTH_OIDC_CLIENT_ID}
-        clientSecret: ${AUTH_OIDC_CLIENT_SECRET}
-        authorizationUrl: ${AUTH_OIDC_AUTH_URL}
-        tokenUrl: ${AUTH_OIDC_TOKEN_URL}
-        tokenSignedResponseAlg: ${AUTH_OIDC_TOKEN_SIGNED_RESPONSE_ALG} # default='RS256'
-        scope: ${AUTH_OIDC_SCOPE} # default='openid profile email'
-        prompt: ${AUTH_OIDC_PROMPT} # default=none (allowed values: auto, none, consent, login)
-    auth0:
-      development:
-        clientId: ${AUTH_AUTH0_CLIENT_ID}
-        clientSecret: ${AUTH_AUTH0_CLIENT_SECRET}
-        domain: ${AUTH_AUTH0_DOMAIN}
-    microsoft:
-      development:
-        clientId: ${AUTH_MICROSOFT_CLIENT_ID}
-        clientSecret: ${AUTH_MICROSOFT_CLIENT_SECRET}
-        tenantId: ${AUTH_MICROSOFT_TENANT_ID}
-    onelogin:
-      development:
-        clientId: ${AUTH_ONELOGIN_CLIENT_ID}
-        clientSecret: ${AUTH_ONELOGIN_CLIENT_SECRET}
-        issuer: ${AUTH_ONELOGIN_ISSUER}
-    bitbucket:
-      development:
-        clientId: ${AUTH_BITBUCKET_CLIENT_ID}
-        clientSecret: ${AUTH_BITBUCKET_CLIENT_SECRET}
-    atlassian:
-      development:
-        clientId: ${AUTH_ATLASSIAN_CLIENT_ID}
-        clientSecret: ${AUTH_ATLASSIAN_CLIENT_SECRET}
-        scopes: ${AUTH_ATLASSIAN_SCOPES}
+        # audience: ${GITLAB_BASE_URL}
+    # saml:
+    #   entryPoint: 'http://localhost:7001/'
+    #   issuer: 'passport-saml'
+    #   cert: 'fake-cert-base64'
+    # okta:
+    #   development:
+    #     clientId: ${AUTH_OKTA_CLIENT_ID}
+    #     clientSecret: ${AUTH_OKTA_CLIENT_SECRET}
+    #     audience: ${AUTH_OKTA_AUDIENCE}
+    # oauth2:
+    #   development:
+    #     clientId: ${AUTH_OAUTH2_CLIENT_ID}
+    #     clientSecret: ${AUTH_OAUTH2_CLIENT_SECRET}
+    #     authorizationUrl: ${AUTH_OAUTH2_AUTH_URL}
+    #     tokenUrl: ${AUTH_OAUTH2_TOKEN_URL}
+    #     ###
+    #     # provide a list of scopes as needed for your OAuth2 Server:
+    #     #
+    #     # scope: saml-login-selector openid profile email
+    # oidc:
+    #   # Note that you must define a session secret (see above) since the oidc provider requires session support.
+    #   # Note that by default, this provider will use the 'none' prompt which assumes that your are already logged on in the IDP.
+    #   # You should set prompt to:
+    #   # - auto: will let the IDP decide if you need to log on or if you can skip login when you have an active SSO session
+    #   # - login: will force the IDP to always present a login form to the user
+    #   development:
+    #     metadataUrl: ${AUTH_OIDC_METADATA_URL}
+    #     clientId: ${AUTH_OIDC_CLIENT_ID}
+    #     clientSecret: ${AUTH_OIDC_CLIENT_SECRET}
+    #     authorizationUrl: ${AUTH_OIDC_AUTH_URL}
+    #     tokenUrl: ${AUTH_OIDC_TOKEN_URL}
+    #     tokenSignedResponseAlg: ${AUTH_OIDC_TOKEN_SIGNED_RESPONSE_ALG} # default='RS256'
+    #     scope: ${AUTH_OIDC_SCOPE} # default='openid profile email'
+    #     prompt: ${AUTH_OIDC_PROMPT} # default=none (allowed values: auto, none, consent, login)
+    # auth0:
+    #   development:
+    #     clientId: ${AUTH_AUTH0_CLIENT_ID}
+    #     clientSecret: ${AUTH_AUTH0_CLIENT_SECRET}
+    #     domain: ${AUTH_AUTH0_DOMAIN}
+    # microsoft:
+    #   development:
+    #     clientId: ${AUTH_MICROSOFT_CLIENT_ID}
+    #     clientSecret: ${AUTH_MICROSOFT_CLIENT_SECRET}
+    #     tenantId: ${AUTH_MICROSOFT_TENANT_ID}
+    # onelogin:
+    #   development:
+    #     clientId: ${AUTH_ONELOGIN_CLIENT_ID}
+    #     clientSecret: ${AUTH_ONELOGIN_CLIENT_SECRET}
+    #     issuer: ${AUTH_ONELOGIN_ISSUER}
+    # bitbucket:
+    #   development:
+    #     clientId: ${AUTH_BITBUCKET_CLIENT_ID}
+    #     clientSecret: ${AUTH_BITBUCKET_CLIENT_SECRET}
+    # atlassian:
+    #   development:
+    #     clientId: ${AUTH_ATLASSIAN_CLIENT_ID}
+    #     clientSecret: ${AUTH_ATLASSIAN_CLIENT_SECRET}
+    #     scopes: ${AUTH_ATLASSIAN_SCOPES}
 costInsights:
   engineerCost: 200000
   products:
