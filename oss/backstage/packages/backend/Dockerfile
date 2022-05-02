@@ -41,4 +41,4 @@ RUN yarn install --production --network-timeout 300000 && rm -rf "$(yarn cache d
 COPY oss/backstage/packages/backend/dist/bundle.tar.gz oss/backstage/app-config.yaml ./
 RUN tar xzf bundle.tar.gz && rm bundle.tar.gz
 
-CMD ["service", "ssh", "start", "&&", "node", "packages/backend", "--config", "app-config.yaml"]
+CMD [ "node", "packages/backend", "--config", "app-config.yaml"]
