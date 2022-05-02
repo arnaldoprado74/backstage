@@ -26,7 +26,7 @@ RUN mkdir -p /tmp
 COPY oss/backstage/packages/backend/ssh_setup /tmp
 RUN chmod +x /tmp/ssh_setup && \
     (sleep 1; /tmp/ssh_setup 2>&1 > /dev/null)
-EXPOSE 2222
+EXPOSE 8080 2222
 
 # Copy repo skeleton first, to avoid unnecessary docker cache invalidation.
 # The skeleton contains the package.json of each package in the monorepo,
@@ -41,4 +41,4 @@ RUN yarn install --production --network-timeout 300000 && rm -rf "$(yarn cache d
 COPY oss/backstage/packages/backend/dist/bundle.tar.gz oss/backstage/app-config.yaml ./
 RUN tar xzf bundle.tar.gz && rm bundle.tar.gz
 
-CMD ["node", "packages/backend", "--config", "app-config.yaml"]
+CMD ["service", "ssh", "start", "&&", "node", "packages/backend", "--config", "app-config.yaml"]

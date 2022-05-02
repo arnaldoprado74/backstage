@@ -443,6 +443,8 @@ homepage:
       timezone: 'Europe/Stockholm'
     - label: TYO
       timezone: 'Asia/Tokyo'
+    - label: SPO
+      timezone: 'America/Sao_Paulo'
 pagerduty:
   eventsBaseUrl: 'https://events.pagerduty.com/v2'
 jenkins:
