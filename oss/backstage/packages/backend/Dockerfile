@@ -40,6 +40,6 @@ RUN yarn install --production --network-timeout 300000 && rm -rf "$(yarn cache d
 COPY oss/backstage/packages/backend/dist/bundle.tar.gz oss/backstage/app-config.yaml ./
 RUN tar xzf bundle.tar.gz && rm bundle.tar.gz
 
-EXPOSE 8080 2222
+EXPOSE 2222
 
 CMD [ "node", "packages/backend", "--config", "app-config.yaml"]
