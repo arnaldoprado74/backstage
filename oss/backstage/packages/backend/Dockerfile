@@ -15,7 +15,7 @@ WORKDIR /app
 
 # install sqlite3 dependencies, you can skip this if you don't use sqlite3 in the image
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libsqlite3-dev python3 build-essential openssh-server && \
+    apt-get install -y --no-install-recommends libsqlite3-dev python3 build-essential openssh-server supervisor && \
     echo "root:Docker!" | chpasswd && \
     rm -rf /var/lib/apt/lists/* && \
     yarn config set python /usr/bin/python3
@@ -40,6 +40,9 @@ RUN yarn install --production --network-timeout 300000 && rm -rf "$(yarn cache d
 COPY oss/backstage/packages/backend/dist/bundle.tar.gz oss/backstage/app-config.yaml ./
 RUN tar xzf bundle.tar.gz && rm bundle.tar.gz
 
-EXPOSE 2222
+COPY oss/backstage/packages/backend/supervisord.conf /etc/
 
-CMD [ "node", "packages/backend", "--config", "app-config.yaml"]
+EXPOSE 3000 2222
+
+#CMD [ "node", "packages/backend", "--config", "app-config.yaml"]
+CMD ["/usr/bin/supervisord"]
