@@ -74,6 +74,8 @@ jobs:
 
       - run: yarn -W --cwd oss/backstage build
 
+      - run: yarn -W --cwd oss/backstage/packages/backend build
+
       - name: Build and push **backend** container image to registry
         uses: docker/build-push-action@v2
         with:
