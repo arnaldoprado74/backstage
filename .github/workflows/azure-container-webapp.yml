@@ -29,8 +29,8 @@ name: Build and deploy a container to an Azure Web App
 env:
   AZURE_WEBAPP_NAME: bs-webapp-dev  # set this to the name of your Azure Web App
   AZURE_WEBAPPFE_NAME: bsfe-webapp-dev  # set this to the name of your Azure Web App
-  FE_SUFFIX: -fe
-
+  BE_SUFFIX: -be # backend
+  FE_SUFFIX: -fe # frontend
 on:
   push:
     branches:
@@ -80,7 +80,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }},ghcr.io/${{ env.REPO }}-be:${{ github.sha }}
+          tags: ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:${{ github.sha }},ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:${{ github.sha }}
           file: ./oss/backstage/packages/backend/Dockerfile
           context: .
 
@@ -88,7 +88,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}${{ env.FE_SUFFIX }},ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:${{ github.sha }}
+          tags: ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:${{ github.sha }},ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:${{ github.sha }}
           file: ./oss/backstage/Dockerfile.hostbuild
           context: .
 
@@ -109,7 +109,7 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: 'ghcr.io/${{ env.REPO }}:${{ github.sha }}'
+          images: 'ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:${{ github.sha }}'
 
       - name: Deploy **Frontend** to Azure Web App
         id: deploy-to-webappfe
