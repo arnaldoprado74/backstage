@@ -109,7 +109,8 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: 'ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:${{ github.sha }}'
+          #images: 'ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:${{ github.sha }}'
+          images: 'ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:latest'
 
       - name: Deploy **Frontend** to Azure Web App
         id: deploy-to-webappfe
@@ -117,4 +118,5 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPPFE_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPPFE_PUBLISH_PROFILE }}
-          images: 'ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:${{ github.sha }}'
+          #images: 'ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:${{ github.sha }}'
+          images: 'ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:latest'
