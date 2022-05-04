@@ -80,7 +80,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:${{ github.sha }},ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:${{ github.sha }}
+          tags: ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:${{ github.sha }},ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:latest
           file: ./oss/backstage/packages/backend/Dockerfile
           context: .
 
@@ -88,7 +88,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:${{ github.sha }},ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:${{ github.sha }}
+          tags: ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:${{ github.sha }},ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:latest
           file: ./oss/backstage/Dockerfile.hostbuild
           context: .
 

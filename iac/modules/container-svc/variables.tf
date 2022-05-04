@@ -25,8 +25,13 @@ variable "subnet_id" {
 
 variable "registry_name" {
   type = string
+  default = ""
 }
 
 variable "service_env" {
   type = map
+}
+
+variable "image_path" {
+  type = string
 }
