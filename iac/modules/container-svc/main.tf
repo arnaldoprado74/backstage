@@ -4,14 +4,15 @@ locals {
 
   envariables    = merge( 
     {
+      "WEBSITE_HEALTHCHECK_MAXPINGFAILURES" = "10"
       "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
       "WEBSITES_PORT"                       = 80
       # "DOCKER_REGISTRY_SERVER_URL"          = data.azurerm_container_registry.acr.login_server
       # "DOCKER_REGISTRY_SERVER_USERNAME"     = data.azurerm_container_registry.acr.admin_username
       # "DOCKER_REGISTRY_SERVER_PASSWORD"     = data.azurerm_container_registry.acr.admin_password
       "DOCKER_REGISTRY_SERVER_URL"          = "https://ghcr.io"
-      "DOCKER_REGISTRY_SERVER_USERNAME"     = "arnaldo.prado@gmail.com"
-      "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"
+      "DOCKER_REGISTRY_SERVER_USERNAME"     = "arnaldo.prado74"
+      "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"
       "AZURE_WEBAPP_NAME"                   = local.app_name
     },
     var.service_env

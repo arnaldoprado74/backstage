@@ -13,10 +13,11 @@ resource "azurerm_user_assigned_identity" "uai" {
 resource "azurerm_container_registry" "acr" {
   count  = contains(var.selected_providers, local.cloud_provider) ? 1 : 0
 
-  name                              = join("", [var.prefix, "acr", var.environment])
-  location                          = var.location
-  resource_group_name               = var.resource_group_name
-  sku                               = "Standard"
+  name                = join("", [var.prefix, "acr", var.environment])
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  sku                 = "Standard"
+  admin_enabled       = true 
 
   identity {
     type = "UserAssigned"
