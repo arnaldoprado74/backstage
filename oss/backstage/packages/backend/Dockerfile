@@ -40,9 +40,9 @@ RUN yarn install --production --network-timeout 300000 && rm -rf "$(yarn cache d
 COPY oss/backstage/packages/backend/dist/bundle.tar.gz oss/backstage/app-config.yaml ./
 RUN tar xzf bundle.tar.gz && rm bundle.tar.gz
 
-COPY oss/backstage/packages/backend/supervisord.conf /etc/
+COPY ./oss/backstage/packages/backend/supervisord.conf /etc/
 
 EXPOSE 3000 2222
 
 #CMD [ "node", "packages/backend", "--config", "app-config.yaml"]
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
