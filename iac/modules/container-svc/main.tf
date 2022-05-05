@@ -7,22 +7,14 @@ locals {
       "WEBSITE_HEALTHCHECK_MAXPINGFAILURES" = "10"
       "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
       "WEBSITES_PORT"                       = 3000
-      # "DOCKER_REGISTRY_SERVER_URL"          = data.azurerm_container_registry.acr.login_server
-      # "DOCKER_REGISTRY_SERVER_USERNAME"     = data.azurerm_container_registry.acr.admin_username
-      # "DOCKER_REGISTRY_SERVER_PASSWORD"     = data.azurerm_container_registry.acr.admin_password
-      "DOCKER_REGISTRY_SERVER_URL"          = "https://ghcr.io"
+      "DOCKER_REGISTRY_SERVER_URL"          = "ghcr.io"
       "DOCKER_REGISTRY_SERVER_USERNAME"     = "arnaldo.prado74"
-      "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"
+      "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"
       "AZURE_WEBAPP_NAME"                   = local.app_name
     },
     var.service_env
   )
 }
-
-# data "azurerm_container_registry" "acr" {
-#   name                = var.registry_name
-#   resource_group_name = var.resource_group_name
-# }
 
 # data "azurerm_key_vault" "kv" {
 #   name                = join("", ["kv", var.company_name, "default"])

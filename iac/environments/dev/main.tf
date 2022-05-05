@@ -123,7 +123,6 @@ module "container-service" {
   company_name              = module.envvars.company_name
   admin_user                = module.envvars.admin_user
   subnet_id                 = one(module.networking[*].subnet-B-id)
-  #registry_name             = join("", ["bs", "acr", module.envvars.environment])
   service_env               = {
       POSTGRES_HOST             = one(module.postgres-db-backstage[*].server_name)
       POSTGRES_PORT             = one(module.postgres-db-backstage[*].server_port)
@@ -148,7 +147,6 @@ module "container-service-fe" {
   company_name              = module.envvars.company_name
   admin_user                = module.envvars.admin_user
   subnet_id                 = one(module.networking[*].subnet-B-id)
-  #registry_name             = join("", ["bs", "acr", module.envvars.environment])
   service_env               = {}
   image_path                = "ghcr.io/arnaldoprado74/backstage-fe:latest"
 }
