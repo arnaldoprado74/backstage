@@ -6,7 +6,7 @@ locals {
     {
       "WEBSITE_HEALTHCHECK_MAXPINGFAILURES" = "10"
       "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
-      "WEBSITES_PORT"                       = 3000
+      "WEBSITES_PORT"                       = var.service_port
       "DOCKER_REGISTRY_SERVER_URL"          = "ghcr.io"
       "DOCKER_REGISTRY_SERVER_USERNAME"     = "arnaldo.prado74"
       "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"

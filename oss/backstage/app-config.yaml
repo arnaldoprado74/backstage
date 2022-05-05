@@ -34,7 +34,7 @@ backend:
     keys:
       - secret: ${BACKEND_SECRET}
 
-  #baseUrl: https://bs-webapp-dev.azurewebsites.net
+  baseUrl: https://bs-webapp-dev.azurewebsites.net
   listen:
     host: 127.0.0.1
     port: 7007

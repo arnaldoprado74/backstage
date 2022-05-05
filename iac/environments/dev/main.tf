@@ -132,6 +132,7 @@ module "container-service" {
       AUTH_GITLAB_CLIENT_ID     = "fba8776a24f440fb4b51aa961cac764991d54095f837dc47b41b62eb7e7c8ec1"
       AUTH_GITLAB_CLIENT_SECRET = "32d9e975d46a5e7f24f72470216cb8b954d8619923a59b7a7f6e6ccb36ec5aaf"
   }
+  service_port              = 7007
   image_path                = "ghcr.io/arnaldoprado74/backstage-be:latest"
 }
 
@@ -148,5 +149,6 @@ module "container-service-fe" {
   admin_user                = module.envvars.admin_user
   subnet_id                 = one(module.networking[*].subnet-B-id)
   service_env               = {}
+  service_port              = 3000
   image_path                = "ghcr.io/arnaldoprado74/backstage-fe:latest"
 }

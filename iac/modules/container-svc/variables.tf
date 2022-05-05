@@ -32,6 +32,10 @@ variable "service_env" {
   type = map
 }
 
+variable "service_port" {
+  type = number
+}
+
 variable "image_path" {
   type = string
 }
