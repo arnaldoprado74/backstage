@@ -44,4 +44,4 @@ RUN chmod +x /tmp/ssh_setup && \
     (sleep 1; /tmp/ssh_setup 2>&1 > /dev/null)
 EXPOSE 2222
 
-ENV PORT 80
+ENV PORT 3000

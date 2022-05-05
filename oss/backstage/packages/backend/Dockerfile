@@ -42,7 +42,7 @@ RUN tar xzf bundle.tar.gz && rm bundle.tar.gz
 
 COPY ./oss/backstage/packages/backend/supervisord.conf /etc/
 
-EXPOSE 3000 2222
+EXPOSE 7007 2222
 
 #CMD [ "node", "packages/backend", "--config", "app-config.yaml"]
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
