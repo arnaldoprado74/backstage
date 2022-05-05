@@ -134,6 +134,7 @@ module "container-service" {
   }
   service_port              = 7007
   image_path                = "ghcr.io/arnaldoprado74/backstage-be:latest"
+  health_check_path         = "/healthcheck"
 }
 
 module "container-service-fe" {
@@ -151,4 +152,5 @@ module "container-service-fe" {
   service_env               = {}
   service_port              = 3000
   image_path                = "ghcr.io/arnaldoprado74/backstage-fe:latest"
+  health_check_path         = "/healthcheck"
 }

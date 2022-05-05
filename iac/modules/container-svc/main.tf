@@ -9,7 +9,7 @@ locals {
       "WEBSITES_PORT"                       = var.service_port
       "DOCKER_REGISTRY_SERVER_URL"          = "ghcr.io"
       "DOCKER_REGISTRY_SERVER_USERNAME"     = "arnaldo.prado74"
-      "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"
+      "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"
       "AZURE_WEBAPP_NAME"                   = local.app_name
     },
     var.service_env
@@ -53,7 +53,7 @@ resource "azurerm_app_service" "webapp_container" {
     always_on         = "true"
     //linux_fx_version  = join("", ["DOCKER|", data.azurerm_container_registry.acr.login_server, "/app/", var.prefix, ":latest"]) #define the images to use for you application
     linux_fx_version  = join("", ["DOCKER|", var.image_path]) #define the images to use for you application
-    health_check_path = "/" # healthD check required in order that internal app service plan loadbalancer do not loadbalance on instance down
+    health_check_path = var.health_check_path # healthD check required in order that internal app service plan loadbalancer do not loadbalance on instance down
     ip_restriction {
      virtual_network_subnet_id = var.subnet_id
      name = "BASE VNET"
