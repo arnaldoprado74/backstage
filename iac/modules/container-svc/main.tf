@@ -6,7 +6,7 @@ locals {
     {
       "WEBSITE_HEALTHCHECK_MAXPINGFAILURES" = "10"
       "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
-      "WEBSITES_PORT"                       = 80
+      "WEBSITES_PORT"                       = 3000
       # "DOCKER_REGISTRY_SERVER_URL"          = data.azurerm_container_registry.acr.login_server
       # "DOCKER_REGISTRY_SERVER_USERNAME"     = data.azurerm_container_registry.acr.admin_username
       # "DOCKER_REGISTRY_SERVER_PASSWORD"     = data.azurerm_container_registry.acr.admin_password
