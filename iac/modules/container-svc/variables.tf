@@ -43,3 +43,15 @@ variable "image_path" {
 variable "health_check_path" {
   type = string
 }
+
+variable "external_registry_url" {
+  type = string
+}
+
+variable "external_registry_username" {
+  type = string
+}
+
+variable "external_registry_password" {
+  type = string
+}

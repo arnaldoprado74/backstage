@@ -221,3 +221,12 @@ output "website_run_from_package" {
 output "website_node_default_version" {
   value = local.workspace["website_node_default_version"]
 }
+output "external_registry_url" {
+  value = local.baseref["external_registry_url"]
+}
+output "external_registry_username" {
+  value = local.baseref["external_registry_username"]
+}
+output "external_registry_password" {
+  value = local.baseref["external_registry_password"]
+}

@@ -32,7 +32,9 @@ import {
   AlertDisplay,
   OAuthRequestDialog,
   SignInPage,
+  SignInProviderConfig,
 } from '@backstage/core-components';
+import { gitlabAuthApiRef, githubAuthApiRef } from '@backstage/core-plugin-api';
 import { apiDocsPlugin, ApiExplorerPage } from '@backstage/plugin-api-docs';
 import { AzurePullRequestsPage } from '@backstage/plugin-azure-devops';
 import {
@@ -85,13 +87,27 @@ import { Root } from './components/Root';
 import { LowerCaseValuePickerFieldExtension } from './components/scaffolder/customScaffolderExtensions';
 import { defaultPreviewTemplate } from './components/scaffolder/defaultPreviewTemplate';
 import { searchPage } from './components/search/SearchPage';
-import { providers } from './identityProviders';
+//import { providers } from './identityProviders';
 import * as plugins from './plugins';
 
 import { techDocsPage } from './components/techdocs/TechDocsPage';
 import { ApacheAirflowPage } from '@backstage/plugin-apache-airflow';
 import { PermissionedRoute } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common';
+
+const gitlabProvider: SignInProviderConfig = {
+  id: 'gitlab-auth-provider',
+  title: 'GitLab',
+  message: 'Sign-in using GitLab',
+  apiRef: gitlabAuthApiRef,
+};
+
+const githubProvider: SignInProviderConfig = {
+  id: 'github-auth-provider',
+  title: 'GitHub',
+  message: 'Sign-in using GitHub',
+  apiRef: githubAuthApiRef,
+};
 
 const app = createApp({
   apis,
@@ -105,7 +121,7 @@ const app = createApp({
       return (
         <SignInPage
           {...props}
-          providers={['guest', 'custom', ...providers]}
+          providers={[gitlabProvider, githubProvider]}
           title="Select a sign-in method"
           align="center"
         />

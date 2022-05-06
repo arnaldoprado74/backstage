@@ -7,9 +7,9 @@ locals {
       "WEBSITE_HEALTHCHECK_MAXPINGFAILURES" = "10"
       "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
       "WEBSITES_PORT"                       = var.service_port
-      "DOCKER_REGISTRY_SERVER_URL"          = "ghcr.io"
-      "DOCKER_REGISTRY_SERVER_USERNAME"     = "arnaldo.prado74"
-      "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"
+      "DOCKER_REGISTRY_SERVER_URL"          = var.external_registry_url
+      "DOCKER_REGISTRY_SERVER_USERNAME"     = var.external_registry_username
+      "DOCKER_REGISTRY_SERVER_PASSWORD"     = var.external_registry_password
       "AZURE_WEBAPP_NAME"                   = local.app_name
     },
     var.service_env
@@ -51,7 +51,6 @@ resource "azurerm_app_service" "webapp_container" {
 
   site_config {
     always_on         = "true"
-    //linux_fx_version  = join("", ["DOCKER|", data.azurerm_container_registry.acr.login_server, "/app/", var.prefix, ":latest"]) #define the images to use for you application
     linux_fx_version  = join("", ["DOCKER|", var.image_path]) #define the images to use for you application
     health_check_path = var.health_check_path # healthD check required in order that internal app service plan loadbalancer do not loadbalance on instance down
     ip_restriction {

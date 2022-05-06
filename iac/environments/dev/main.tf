@@ -129,12 +129,18 @@ module "container-service" {
       POSTGRES_USER             = module.envvars.admin_user
       POSTGRES_PASSWORD         = module.envvars.core_db_pass
       BACKEND_SECRET            = random_id.backstage_secret.b64_std
-      AUTH_GITLAB_CLIENT_ID     = "fba8776a24f440fb4b51aa961cac764991d54095f837dc47b41b62eb7e7c8ec1"
-      AUTH_GITLAB_CLIENT_SECRET = "32d9e975d46a5e7f24f72470216cb8b954d8619923a59b7a7f6e6ccb36ec5aaf"
+      AUTH_GITLAB_CLIENT_ID     = "1d70f853d3989722eb52ae9fe9a561b140e4927f94828e86ea2a603a059a8720"
+      AUTH_GITLAB_CLIENT_SECRET = "d06e894535f3d087decf44f90a68d4bde4583ec5b57cfe0baf8755a81951a76f"
+      AUTH_GITHUB_CLIENT_ID     = "2387574e4120a6dac08e"
+      AUTH_GITHUB_CLIENT_SECRET = "0e4054f2c6eb29b3190a7c5050544980c0db709b"
+      GITLAB_TOKEN              = "glpat-jsiH3f7HGUn3tW2GxGJu"
   }
-  service_port              = 7007
-  image_path                = "ghcr.io/arnaldoprado74/backstage-be:latest"
-  health_check_path         = "/healthcheck"
+  service_port               = 7007
+  image_path                 = "ghcr.io/arnaldoprado74/backstage-be:latest"
+  health_check_path          = "/healthcheck"
+  external_registry_url      = module.envvars.external_registry_url
+  external_registry_username = module.envvars.external_registry_username
+  external_registry_password = module.envvars.external_registry_password
 }
 
 module "container-service-fe" {
@@ -153,4 +159,7 @@ module "container-service-fe" {
   service_port              = 3000
   image_path                = "ghcr.io/arnaldoprado74/backstage-fe:latest"
   health_check_path         = "/healthcheck"
+  external_registry_url      = module.envvars.external_registry_url
+  external_registry_username = module.envvars.external_registry_username
+  external_registry_password = module.envvars.external_registry_password
 }
