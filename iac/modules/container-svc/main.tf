@@ -9,7 +9,7 @@ locals {
       "WEBSITES_PORT"                       = var.service_port
       "DOCKER_REGISTRY_SERVER_URL"          = "ghcr.io"
       "DOCKER_REGISTRY_SERVER_USERNAME"     = "arnaldo.prado74"
-      "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"
+      "DOCKER_REGISTRY_SERVER_PASSWORD"     = "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"
       "AZURE_WEBAPP_NAME"                   = local.app_name
     },
     var.service_env
