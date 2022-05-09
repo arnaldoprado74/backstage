@@ -59,7 +59,7 @@ resource "azurerm_app_service" "webapp_container" {
      priority =  65000
     }
     ip_restriction {
-      ip_address = "201.13.82.30/32"
+      ip_address = "201.26.103.81/32"
       name = "ANP"
       priority =  300
     }

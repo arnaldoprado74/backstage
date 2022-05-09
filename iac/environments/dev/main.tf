@@ -134,6 +134,7 @@ module "container-service" {
       AUTH_GITHUB_CLIENT_ID     = "2387574e4120a6dac08e"
       AUTH_GITHUB_CLIENT_SECRET = "0e4054f2c6eb29b3190a7c5050544980c0db709b"
       GITLAB_TOKEN              = "glpat-jsiH3f7HGUn3tW2GxGJu"
+      GITHUB_TOKEN              = "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"
   }
   service_port               = 7007
   image_path                 = "ghcr.io/arnaldoprado74/backstage-be:latest"
