@@ -72,12 +72,13 @@ jobs:
 
       - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage tsc
 
-      - run: yarn -W --cwd oss/backstage build 
+      - run: yarn -W --cwd oss/backstage/packages/backend build
       
-      - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage build:api-reports 
-      
+      - run: yarn -W --cwd oss/backstage/packages/app build
+
+      #- run: yarn -W --cwd oss/backstage build
+
       - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage build:api-docs
-      #- run: yarn -W --cwd oss/backstage/packages/backend build
 
       - name: Build and push **backend** container image to registry
         uses: docker/build-push-action@v2
