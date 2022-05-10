@@ -66,14 +66,20 @@ jobs:
         with:
           node-version: '16'
       
-      - run: npm --prefix oss/backstage install --global yarn
+      #- run: npm --prefix oss/backstage install --global yarn
 
-      - run: yarn -W --cwd oss/backstage add -D npm-packlist buffer npm-packlist msw jest jest-css-modules jest-transform-yaml cpu-features yarn-lock-check @backstage/cli
+      #- run: yarn -W --cwd oss/backstage add -D npm-packlist buffer npm-packlist msw jest jest-css-modules jest-transform-yaml cpu-features yarn-lock-check @backstage/cli
 
-      - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage tsc
+      #- run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage tsc
 
+      - run: npm --prefix oss/backstage/packages/backend install --global yarn
+      - run: yarn -W --cwd oss/backstage/packages/backend add -D npm-packlist buffer npm-packlist msw jest jest-css-modules jest-transform-yaml cpu-features yarn-lock-check @backstage/cli
+      - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage/packages/backend tsc
       - run: yarn -W --cwd oss/backstage/packages/backend build
-      
+
+      - run: npm --prefix oss/backstage/packages/app install --global yarn
+      - run: yarn -W --cwd oss/backstage/packages/app add -D npm-packlist buffer npm-packlist msw jest jest-css-modules jest-transform-yaml cpu-features yarn-lock-check @backstage/cli
+      - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage/packages/app tsc
       - run: yarn -W --cwd oss/backstage/packages/app build
 
       #- run: yarn -W --cwd oss/backstage build
