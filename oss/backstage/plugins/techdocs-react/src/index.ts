@@ -26,13 +26,9 @@ export {
   TechDocsAddons,
   TECHDOCS_ADDONS_WRAPPER_KEY,
 } from './addons';
-export { techdocsApiRef } from './api';
-export type { TechDocsApi } from './api';
-export {
-  defaultTechDocsReaderPageValue,
-  TechDocsReaderPageProvider,
-  useTechDocsReaderPage,
-} from './context';
+export { techdocsApiRef, techdocsStorageApiRef } from './api';
+export type { SyncResult, TechDocsApi, TechDocsStorageApi } from './api';
+export { TechDocsReaderPageProvider, useTechDocsReaderPage } from './context';
 export type {
   TechDocsReaderPageProviderProps,
   TechDocsReaderPageProviderRenderFunction,

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { ComponentType, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useOutlet } from 'react-router-dom';
 
 import {
@@ -31,13 +31,13 @@ export const TECHDOCS_ADDONS_KEY = 'techdocs.addons.addon.v1';
 
 /**
  * Marks the <TechDocsAddons> registry component.
- * @alpha
+ * @public
  */
 export const TECHDOCS_ADDONS_WRAPPER_KEY = 'techdocs.addons.wrapper.v1';
 
 /**
  * TechDocs Addon registry.
- * @alpha
+ * @public
  */
 export const TechDocsAddons: React.ComponentType = () => null;
 
@@ -49,11 +49,11 @@ const getDataKeyByName = (name: string) => {
 
 /**
  * Create a TechDocs addon.
- * @alpha
+ * @public
  */
 export function createTechDocsAddonExtension<TComponentProps>(
   options: TechDocsAddonOptions<TComponentProps>,
-): Extension<ComponentType<TComponentProps>> {
+): Extension<(props: TComponentProps) => JSX.Element | null> {
   const { name, component: TechDocsAddon } = options;
   return createReactExtension({
     name,
@@ -96,7 +96,7 @@ const getAllTechDocsAddonsData = (collection: ElementCollection) => {
 
 /**
  * hook to use addons in components
- * @alpha
+ * @public
  */
 export const useTechDocsAddons = () => {
   const node = useOutlet();

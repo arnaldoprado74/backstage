@@ -250,7 +250,7 @@ catalog:
     # Add a location here to ingest it, for example from a URL:
     #
     #     - type: url
-    #       target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-components.yaml
+    #       target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
     #
     # For local development you can use a file location instead:
     #
@@ -260,9 +260,14 @@ catalog:
     # File locations are relative to the current working directory of the
     # backend, for example packages/backend/.
 
-    # Backstage example components
+    # Backstage example entities
     - type: file
-      target: ../catalog-model/examples/all-components.yaml
+      target: ../catalog-model/examples/all.yaml
+    # Backstage example groups and users
+    - type: file
+      target: ../catalog-model/examples/acme-corp.yaml
+      rules:
+        - allow: [User, Group]
     # Example component for github-actions and TechDocs
     - type: file
       target: ../../plugins/github-actions/examples/sample.yaml
