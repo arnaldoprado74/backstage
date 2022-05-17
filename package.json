@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "jest-validate": "^28.1.0"
+  }
+}
