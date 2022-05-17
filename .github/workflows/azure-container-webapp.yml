@@ -67,7 +67,8 @@ jobs:
           node-version: '16'
       
       - run: npm --prefix oss/backstage install --global yarn
-      - run: yarn -W --cwd oss/backstage add -D npm-packlist buffer npm-packlist msw jest jest-css-modules jest-transform-yaml cpu-features yarn-lock-check @backstage/cli
+      #- run: yarn -W --cwd oss/backstage add -D npm-packlist buffer npm-packlist msw jest jest-css-modules jest-transform-yaml cpu-features yarn-lock-check @backstage/cli
+      - run: yarn -W --cwd oss/backstage install
       
       #- run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage/packages/backend tsc
       #- run: yarn -W --cwd oss/backstage/packages/backend build
