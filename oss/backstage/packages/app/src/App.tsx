@@ -28,6 +28,7 @@ import {
 } from '@backstage/catalog-model';
 import { createApp } from '@backstage/app-defaults';
 import { FlatRoutes } from '@backstage/core-app-api';
+import { gitlabAuthApiRef, githubAuthApiRef } from '@backstage/core-plugin-api';
 import {
   AlertDisplay,
   OAuthRequestDialog,
@@ -90,7 +91,7 @@ import { Root } from './components/Root';
 import { LowerCaseValuePickerFieldExtension } from './components/scaffolder/customScaffolderExtensions';
 import { defaultPreviewTemplate } from './components/scaffolder/defaultPreviewTemplate';
 import { searchPage } from './components/search/SearchPage';
-import { providers } from './identityProviders';
+//import { providers } from './identityProviders';
 import * as plugins from './plugins';
 
 import { techDocsPage } from './components/techdocs/TechDocsPage';
@@ -110,7 +111,17 @@ const app = createApp({
       return (
         <SignInPage
           {...props}
-          providers={[...providers]}
+          providers={[{
+            id: 'gitlab-auth-provider',
+            title: 'GitLab',
+            message: 'Sign in using GitLab',
+            apiRef: gitlabAuthApiRef,
+            }, {
+            id: 'github-auth-provider',
+            title: 'GitHub',
+            message: 'Sign in using GitHub',
+            apiRef: githubAuthApiRef,
+            }]}
           title="Select a sign-in method"
           align="center"
         />
