@@ -1,9 +1,23 @@
 app:
-  title: Scaffolded Backstage App
-  baseUrl: http://localhost:3000
+  title: Backstage Bradesco App
+  #baseUrl: http://localhost:3000
+  baseUrl: http://0.0.0.0:3000 # https://bsfe-webapp-dev.azurewebsites.net
 
 organization:
-  name: My Company
+  name: Bradesco
+  support:
+    url: https://github.com/backstage/backstage/issues # Used by common ErrorPage
+    items: # Used by common SupportButton component
+      - title: Issues
+        icon: github
+        links:
+          - url: https://github.com/backstage/backstage/issues
+            title: GitHub Issues
+      - title: Discord Chatroom
+        icon: chat
+        links:
+          - url: https://discord.gg/MUpMjP2
+            title: '#backstage'
 
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
@@ -12,48 +26,38 @@ backend:
   # auth:
   #   keys:
   #     - secret: ${BACKEND_SECRET}
-  baseUrl: http://localhost:7007
+  auth:
+    keys:
+      - secret: ${BACKEND_SECRET}
+
+  baseUrl: https://bs-webapp-dev.azurewebsites.net
   listen:
+    host: 0.0.0.0
     port: 7007
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+  cache:
+    store: memory
+  cors:
+    origin: https://bsfe-webapp-dev.azurewebsites.net
+    methods: [GET, POST, PUT, DELETE]
+    credentials: true
   csp:
     connect-src: ["'self'", 'http:', 'https:']
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
-  cors:
-    origin: http://localhost:3000
-    methods: [GET, POST, PUT, DELETE]
-    credentials: true
-  # config options: https://node-postgres.com/api/client
-  database:
-    client: pg
-    connection:
-      host: ${POSTGRES_HOST}
-      port: ${POSTGRES_PORT}
-      user: ${POSTGRES_USER}
-      password: ${POSTGRES_PASSWORD}
-      # https://node-postgres.com/features/ssl
-      # you can set the sslmode configuration option via the `PGSSLMODE` environment variable
-      # see https://www.postgresql.org/docs/current/libpq-ssl.html Table 33.1. SSL Mode Descriptions (e.g. require)
-      # ssl:
-      #   ca: # if you have a CA file and want to verify it you can uncomment this section
-      #     $file: <file-path>/ca/server.crt
-  cache:
-    store: memory
+  reading:
+    allow:
+      - host: bs-webapp-dev.azurewebsites.net
+      - host: bsfe-webapp-dev.azurewebsites.net
+      - host: '*.mozilla.org'
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
 
-integrations:
-  github:
-    - host: github.com
-      token: ${GITHUB_TOKEN}
-    ### Example for how to add your GitHub Enterprise instance using the API:
-    # - host: ghe.example.net
-    #   apiBaseUrl: https://ghe.example.net/api/v3
-    #   token: ${GHE_TOKEN}
-
 proxy:
-  '/test':
-    target: 'https://example.com'
-    changeOrigin: true
+  #'/test':
+  #  target: 'https://example.com'
+  #  changeOrigin: true
 
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 # Note: After experimenting with basic setup, use CI/CD to generate docs
@@ -66,50 +70,262 @@ techdocs:
   publisher:
     type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 
-auth:
-  # see https://backstage.io/docs/auth/ to learn about auth providers
-  providers: {}
+sentry:
+  organization: Bradesco
 
-scaffolder:
-  # see https://backstage.io/docs/features/software-templates/configuration for software template options
+kubernetes:
+  serviceLocatorMethod:
+    type: 'multiTenant'
+  clusterLocatorMethods:
+    - type: 'config'
+      clusters: []
+
+
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+    ### Example for how to add your GitHub Enterprise instance using the API:
+    # - host: ghe.example.net
+    #   apiBaseUrl: https://ghe.example.net/api/v3
+    #   token: ${GHE_TOKEN}
+    ### Example for how to add your GitHub Enterprise instance using raw HTTP fetches (token is optional):
+    # - host: ghe.example.net
+    #   rawBaseUrl: https://ghe.example.net/raw
+    #   token: ${GHE_TOKEN}
+  gitlab:
+    - host: gitlab.com
+      token: ${GITLAB_TOKEN}
+  # bitbucket:
+  #   - host: bitbucket.org
+  #     username: ${BITBUCKET_USERNAME}
+  #     appPassword: ${BITBUCKET_APP_PASSWORD}
+    ### Example for how to add your bitbucket server instance using the API:
+    # - host: server.bitbucket.com
+    #   apiBaseUrl: server.bitbucket.com
+    #   username: ${BITBUCKET_SERVER_USERNAME}
+    #   appPassword: ${BITBUCKET_SERVER_APP_PASSWORD}
+  azure:
+    - host: dev.azure.com
+      token: ${AZURE_TOKEN}
+  #  googleGcs:
+  #    clientEmail: 'example@example.com'
+  #    privateKey: ${GCS_PRIVATE_KEY}
+  # awsS3:
+  #   - host: amazonaws.com
+  #     accessKeyId: ${AWS_ACCESS_KEY_ID}
+  #     secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
 
 catalog:
   import:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Location]
+    - allow:
+        - Component
+        - API
+        - Resource
+        - Group
+        - User
+        - Template
+        - System
+        - Domain
+        - Location
+
+  processors:
+    ldapOrg:
+      ### Example for how to add your enterprise LDAP server
+      # providers:
+      #   - target: ldaps://ds.example.net
+      #     bind:
+      #       dn: uid=ldap-reader-user,ou=people,ou=example,dc=example,dc=net
+      #       secret: ${LDAP_SECRET}
+      #     users:
+      #       dn: ou=people,ou=example,dc=example,dc=net
+      #       options:
+      #         filter: (uid=*)
+      #       map:
+      #         description: l
+      #     groups:
+      #       dn: ou=access,ou=groups,ou=example,dc=example,dc=net
+      #       options:
+      #         filter: (&(objectClass=some-group-class)(!(groupType=email)))
+    microsoftGraphOrg:
+      ### Example for how to add your Microsoft Graph tenant
+      #providers:
+      #  - target: https://graph.microsoft.com/v1.0
+      #    authority: https://login.microsoftonline.com
+      #    tenantId: ${MICROSOFT_GRAPH_TENANT_ID}
+      #    clientId: ${MICROSOFT_GRAPH_CLIENT_ID}
+      #    clientSecret: ${MICROSOFT_GRAPH_CLIENT_SECRET_TOKEN}
+      #    userFilter: accountEnabled eq true and userType eq 'member'
+      #    groupFilter: securityEnabled eq false and mailEnabled eq true and groupTypes/any(c:c+eq+'Unified')
+
   locations:
-    # Backstage example components
-    - type: url
-      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-components.yaml
+    # Add a location here to ingest it, for example from a URL:
+    #
+    #     - type: url
+    #       target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
+    #
+    # For local development you can use a file location instead:
+    #
+    #     - type: file
+    #       target: ../catalog-model/examples/all-components.yaml
+    #
+    # File locations are relative to the current working directory of the
+    # backend, for example packages/backend/.
+    # Local example data, file locations are relative to the backend process, typically `packages/backend`
+    - type: file
+      target: ../../examples/entities.yaml
 
-    # Backstage example systems
-    - type: url
-      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-systems.yaml
+    # Backstage end-to-end tests of TechDocs
+    - type: file
+      target: ../../cypress/e2e-fixture.catalog.info.yaml
 
-    # Backstage example APIs
-    - type: url
-      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-apis.yaml
+    # Backstage example entities
+    - type: file
+      target: ../catalog-model/examples/all.yaml
 
-    # Backstage example resources
-    - type: url
-      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-resources.yaml
-
-    # Backstage example organization groups
-    - type: url
-      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme/org.yaml
+    # Local example template
+    - type: file
+      target: ../../examples/template/template.yaml
+      rules:
+        - allow: [Template]
 
     # Backstage example templates
-    - type: url
-      target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/react-ssr-template/template.yaml
+    - type: file
+      target: ../../plugins/scaffolder-backend/sample-templates/all-templates.yaml
+
+    # Local example organizational data
+    - type: file
+      target: ../../examples/org.yaml
+
+    # Backstage example groups and users
+    - type: file
+      target: ../catalog-model/examples/acme-corp.yaml
       rules:
-        - allow: [Template]
-    - type: url
-      target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/springboot-grpc-template/template.yaml
-      rules:
-        - allow: [Template]
-    - type: url
-      target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/docs-template/template.yaml
-      rules:
-        - allow: [Template]
+        - allow: [User, Group]
+    # Example component for github-actions and TechDocs
+    - type: file
+      target: ../../plugins/github-actions/examples/sample.yaml
+    # Example component for TechDocs
+    - type: file
+      target: ../../plugins/techdocs-backend/examples/documented-component/catalog-info.yaml
+    # Backstage example APIs
+    - type: file
+      target: ../catalog-model/examples/all-apis.yaml
+    # Backstage example resources
+    - type: file
+      target: ../catalog-model/examples/all-resources.yaml
+    # Backstage example domains
+    - type: file
+      target: ../catalog-model/examples/all-domains.yaml
+    # Backstage example systems
+    - type: file
+      target: ../catalog-model/examples/all-systems.yaml
+
+scaffolder:
+  # Use to customize default commit author info used when new components are created
+  # defaultAuthor:
+  #   name: Scaffolder
+  #   email: scaffolder@backstage.io
+  # Use to customize the default commit message when new components are created
+  # defaultCommitMessage: 'Initial commit'
+  # see https://backstage.io/docs/features/software-templates/configuration for software template options
+
+auth:
+  ### Add auth.keyStore.provider to more granularly control how to store JWK data when running
+  # the auth-backend.
+  #
+  # keyStore:
+  #  provider: firestore
+  #  firestore:
+  #    projectId: my-project
+  #    path: my-sessions
+
+#  environment: development
+  ### Providing an auth.session.secret will enable session support in the auth-backend
+  # session:
+  #   secret: custom session secret
+  providers:
+    github:
+      development:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+    #     enterpriseInstanceUrl: ${AUTH_GITHUB_ENTERPRISE_INSTANCE_URL}
+    gitlab:
+      development:
+        clientId: ${AUTH_GITLAB_CLIENT_ID}
+        clientSecret: ${AUTH_GITLAB_CLIENT_SECRET}
+        # audience: ${GITLAB_BASE_URL}
+
+costInsights:
+  engineerCost: 200000
+  products:
+    computeEngine:
+      name: Compute Engine
+      icon: compute
+    cloudDataflow:
+      name: Cloud Dataflow
+      icon: data
+    cloudStorage:
+      name: Cloud Storage
+      icon: storage
+    bigQuery:
+      name: BigQuery
+      icon: search
+    events:
+      name: Events
+      icon: data
+  metrics:
+    DAU:
+      name: Daily Active Users
+      default: true
+    MSC:
+      name: Monthly Subscribers
+  currencies:
+    engineers:
+      label: 'Engineers 🛠'
+      unit: 'engineer'
+    usd:
+      label: 'US Dollars 💵'
+      kind: 'USD'
+      unit: 'dollar'
+      prefix: '$'
+      rate: 1
+    carbonOffsetTons:
+      label: 'Carbon Offset Tons ♻️⚖️s'
+      kind: 'CARBON_OFFSET_TONS'
+      unit: 'carbon offset ton'
+      rate: 3.5
+    beers:
+      label: 'Beers 🍺'
+      kind: 'BEERS'
+      unit: 'beer'
+      rate: 4.5
+    pintsIceCream:
+      label: 'Pints of Ice Cream 🍦'
+      kind: 'PINTS_OF_ICE_CREAM'
+      unit: 'ice cream pint'
+      rate: 5.5
+homepage:
+  clocks:
+    - label: UTC
+      timezone: UTC
+    - label: NYC
+      timezone: 'America/New_York'
+    - label: STO
+      timezone: 'Europe/Stockholm'
+    - label: TYO
+      timezone: 'Asia/Tokyo'
+    - label: SPO
+      timezone: 'America/Sao_Paulo'
+
+azureDevOps:
+  host: dev.azure.com
+  token: my-token
+  organization: my-company
+
+apacheAirflow:
+  baseUrl: https://your.airflow.instance.com
+

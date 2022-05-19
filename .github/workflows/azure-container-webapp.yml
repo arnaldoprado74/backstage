@@ -66,26 +66,21 @@ jobs:
         with:
           node-version: '16'
       
-      - run: npm --prefix oss/backstage install --global yarn
-      #- run: yarn -W --cwd oss/backstage add -D npm-packlist buffer npm-packlist msw jest jest-css-modules jest-transform-yaml cpu-features yarn-lock-check @backstage/cli
-      - run: yarn -W --cwd oss/backstage install
-      
-      #- run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage/packages/backend tsc
-      #- run: yarn -W --cwd oss/backstage/packages/backend build
-
-      #- run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage/packages/app tsc
-      #- run: yarn -W --cwd oss/backstage/packages/app build
-
-      - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage tsc
-      #- run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage build:api-docs
-      - run: yarn -W --cwd oss/backstage build
+      # - run: npm --prefix oss/backstage install --global yarn
+      # - run: yarn -W --cwd oss/backstage install
+      # - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage tsc
+      # - run: yarn -W --cwd oss/backstage build
+      - run: npm --prefix dev-portals/bradescoders install --global yarn
+      - run: yarn -W --cwd dev-portals/bradescoders install
+      - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd dev-portals/bradescoders tsc
+      - run: yarn -W --cwd dev-portals/bradescoders build
 
       - name: Build and push **backend** container image to registry
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:${{ github.sha }},ghcr.io/${{ env.REPO }}${{ env.BE_SUFFIX }}:latest
-          file: ./oss/backstage/packages/backend/Dockerfile
+          file: ./dev-portals/bradescoders/packages/backend/Dockerfile
           context: .
 
       - name: Build and push **frontend** container image to registry
@@ -93,7 +88,7 @@ jobs:
         with:
           push: true
           tags: ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:${{ github.sha }},ghcr.io/${{ env.REPO }}${{ env.FE_SUFFIX }}:latest
-          file: ./oss/backstage/Dockerfile.hostbuild
+          file: ./dev-portals/bradescoders/Dockerfile.hostbuild
           context: .
 
   deploy:
