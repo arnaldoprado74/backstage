@@ -35,7 +35,7 @@ backend:
     host: 0.0.0.0
     port: 7007
   database:
-    client: better-sqlite3
+    client: pg
     connection: ':memory:'
   cache:
     store: memory
