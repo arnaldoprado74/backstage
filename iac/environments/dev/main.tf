@@ -2,6 +2,11 @@
 #   backend "azurerm" {}
 # }
 
+locals {
+  GITHUB_TOKEN   = "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"
+  BACKEND_SECRET = random_id.backstage_secret.b64_std
+}
+
 provider "azurerm" {
   features {}
 }
@@ -128,13 +133,13 @@ module "container-service" {
       POSTGRES_PORT             = one(module.postgres-db-backstage[*].server_port)
       POSTGRES_USER             = module.envvars.admin_user
       POSTGRES_PASSWORD         = module.envvars.core_db_pass
-      BACKEND_SECRET            = random_id.backstage_secret.b64_std
+      BACKEND_SECRET            = local.BACKEND_SECRET
       AUTH_GITLAB_CLIENT_ID     = "1d70f853d3989722eb52ae9fe9a561b140e4927f94828e86ea2a603a059a8720"
       AUTH_GITLAB_CLIENT_SECRET = "d06e894535f3d087decf44f90a68d4bde4583ec5b57cfe0baf8755a81951a76f"
       AUTH_GITHUB_CLIENT_ID     = "2387574e4120a6dac08e"
       AUTH_GITHUB_CLIENT_SECRET = "0e4054f2c6eb29b3190a7c5050544980c0db709b"
       GITLAB_TOKEN              = "glpat-jsiH3f7HGUn3tW2GxGJu"
-      GITHUB_TOKEN              = "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"
+      GITHUB_TOKEN              = local.GITHUB_TOKEN
   }
   service_port               = 7007
   image_path                 = "ghcr.io/arnaldoprado74/backstage-be:latest"
@@ -156,7 +161,10 @@ module "container-service-fe" {
   company_name              = module.envvars.company_name
   admin_user                = module.envvars.admin_user
   subnet_id                 = one(module.networking[*].subnet-B-id)
-  service_env               = {}
+  service_env               = {
+    BACKEND_SECRET            = local.BACKEND_SECRET
+    GITHUB_TOKEN              = local.GITHUB_TOKEN
+  }
   service_port              = 3000
   image_path                = "ghcr.io/arnaldoprado74/backstage-fe:latest"
   health_check_path         = "/healthcheck"
