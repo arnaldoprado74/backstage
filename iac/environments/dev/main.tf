@@ -3,7 +3,7 @@
 # }
 
 locals {
-  GITHUB_TOKEN   = "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"
+  GITHUB_TOKEN   = "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"
   BACKEND_SECRET = random_id.backstage_secret.b64_std
 }
 
