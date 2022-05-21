@@ -30,6 +30,7 @@ variable "registry_name" {
 
 variable "service_env" {
   type = map
+  sensitive = true
 }
 
 variable "service_port" {
@@ -54,4 +55,5 @@ variable "external_registry_username" {
 
 variable "external_registry_password" {
   type = string
+  sensitive = true
 }

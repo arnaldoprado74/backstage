@@ -3,7 +3,6 @@
 # }
 
 locals {
-  GITHUB_TOKEN   = "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"
   BACKEND_SECRET = random_id.backstage_secret.b64_std
 }
 
@@ -40,6 +39,21 @@ module "storage" {
   account_replication       = "GRS"
 
   depends_on = [ module.resgrp[0] ]
+}
+
+module "kv" {
+  count  = join("-", [module.envvars.WKSP_INFRA, module.envvars.environment]) == terraform.workspace ? 1 : 0
+  source = "../../modules/kv"
+
+  environment             = module.envvars.environment
+  resource_group_name     = module.resgrp[0].main_resource_group_name
+  location                = module.envvars.location
+  company_name            = module.envvars.company_name
+  tenant_id               = module.envvars.tenant_id
+  tenant_user_object_id   = module.envvars.tenant_user_object_id
+   keyvault_secrets = {
+   }
+   allowed_external_access_addresses = module.envvars.allowed_external_access_addresses
 }
 
 module "networking" {
@@ -116,6 +130,23 @@ resource "random_id" "backstage_secret" {
   byte_length = 24
 }
 
+data "azurerm_key_vault_secret" "github_cr_pat" {
+  name         = "github-cr-pat"
+  key_vault_id = one(module.kv[*].kv_id)
+
+  depends_on = [
+    module.kv
+  ]
+}
+
+data "azurerm_key_vault_secret" "github_token" {
+  name         = "github-token"
+  key_vault_id = one(module.kv[*].kv_id)
+  depends_on = [
+    module.kv
+  ]
+}
+
 module "container-service" {
   count  = join("-", [module.envvars.WKSP_INFRA, module.envvars.environment]) == terraform.workspace ? 1 : 0
   source = "../../modules/container-svc" 
@@ -139,14 +170,14 @@ module "container-service" {
       AUTH_GITHUB_CLIENT_ID     = "2387574e4120a6dac08e"
       AUTH_GITHUB_CLIENT_SECRET = "0e4054f2c6eb29b3190a7c5050544980c0db709b"
       GITLAB_TOKEN              = "glpat-jsiH3f7HGUn3tW2GxGJu"
-      GITHUB_TOKEN              = local.GITHUB_TOKEN
+      GITHUB_TOKEN              = data.azurerm_key_vault_secret.github_token.value
   }
   service_port               = 7007
   image_path                 = "ghcr.io/arnaldoprado74/backstage-be:latest"
   health_check_path          = "/healthcheck"
   external_registry_url      = module.envvars.external_registry_url
   external_registry_username = module.envvars.external_registry_username
-  external_registry_password = module.envvars.external_registry_password
+  external_registry_password = data.azurerm_key_vault_secret.github_cr_pat.value
 }
 
 module "container-service-fe" {
@@ -163,12 +194,11 @@ module "container-service-fe" {
   subnet_id                 = one(module.networking[*].subnet-B-id)
   service_env               = {
     BACKEND_SECRET            = local.BACKEND_SECRET
-    GITHUB_TOKEN              = local.GITHUB_TOKEN
   }
   service_port              = 3000
   image_path                = "ghcr.io/arnaldoprado74/backstage-fe:latest"
   health_check_path         = "/healthcheck"
   external_registry_url      = module.envvars.external_registry_url
   external_registry_username = module.envvars.external_registry_username
-  external_registry_password = module.envvars.external_registry_password
+  external_registry_password = data.azurerm_key_vault_secret.github_cr_pat.value
 }

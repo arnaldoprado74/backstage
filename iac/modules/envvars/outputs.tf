@@ -227,6 +227,3 @@ output "external_registry_url" {
 output "external_registry_username" {
   value = local.baseref["external_registry_username"]
 }
-output "external_registry_password" {
-  value = local.baseref["external_registry_password"]
-}
