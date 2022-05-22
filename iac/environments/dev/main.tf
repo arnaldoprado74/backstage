@@ -96,21 +96,22 @@ module "postgres-db-backstage" {
   count  = join("-", [module.envvars.WKSP_INFRA, module.envvars.environment]) == terraform.workspace ? 1 : 0
   source = "../../modules/postgres-db" 
 
-  selected_providers        = ["azure"]
-  prefix                    = "bs"
-  environment               = module.envvars.environment
-  resource_group_name       = module.envvars.resource_group_name
-  location                  = module.envvars.location
-  company_name              = module.envvars.company_name
-  admin_user                = module.envvars.admin_user
-  core_db_pass              = module.envvars.core_db_pass
-  psql_sku_name             = "B_Gen5_1"
-  psql_version              = "9.6"
-  psql_storage_mb           = 65536
-  psql_storage_backup_rd    = 7 # retention days
-  psql_storage_backup_geor  = false
-  psql_ssl_enforcement      = true
-  subnet_id                 = one(module.networking[*].subnet-B-id)
+  selected_providers                = ["azure"]
+  prefix                            = "bs"
+  environment                       = module.envvars.environment
+  resource_group_name               = module.envvars.resource_group_name
+  location                          = module.envvars.location
+  company_name                      = module.envvars.company_name
+  admin_user                        = module.envvars.admin_user
+  core_db_pass                      = module.envvars.core_db_pass
+  psql_sku_name                     = "B_Gen5_1"
+  psql_version                      = "11"
+  psql_storage_mb                   = 65536
+  psql_storage_backup_rd            = 7 # retention days
+  psql_storage_backup_geor          = false
+  psql_ssl_enforcement              = true
+  subnet_id                         = one(module.networking[*].subnet-B-id)
+  allowed_external_access_addresses = module.envvars.allowed_external_access_addresses
 }
 
 module "container-registry" {

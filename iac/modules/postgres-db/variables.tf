@@ -44,3 +44,7 @@ variable "psql_ssl_enforcement" {
 variable "subnet_id" {
   type = string
 }
+
+variable "allowed_external_access_addresses" {
+  type = list
+}

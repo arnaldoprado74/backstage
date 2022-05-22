@@ -34,6 +34,14 @@ resource "azurerm_postgresql_server" "psqlserver" {
 #   ignore_missing_vnet_service_endpoint = true
 # }
 
+resource "azurerm_postgresql_firewall_rule" "fw0" {
+  name                = join("-", [var.prefix, "fw", "0", var.environment])
+  resource_group_name = var.resource_group_name
+  server_name         = one(azurerm_postgresql_server.psqlserver[*].name)
+  start_ip_address    = replace(var.allowed_external_access_addresses[0], "/\\/.*/", "")
+  end_ip_address      = replace(var.allowed_external_access_addresses[0], "/\\/.*/", "")
+}
+
 resource "azurerm_postgresql_database" "psqldb" {
   count  = contains(var.selected_providers, local.cloud_provider) ? 1 : 0
 
