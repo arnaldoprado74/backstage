@@ -164,7 +164,7 @@ module "container-service" {
       POSTGRES_HOST             = one(module.postgres-db-backstage[*].server_name)
       POSTGRES_PORT             = one(module.postgres-db-backstage[*].server_port)
       POSTGRES_USER             = module.envvars.admin_user
-      POSTGRES_PASSWORD         = module.envvars.core_db_pass
+      POSTGRES_PASSWORD         = "bsadmin@bs-srv-dev" #one(module.postgres-db-backstage[*].admin_username)
       BACKEND_SECRET            = local.BACKEND_SECRET
       AUTH_GITLAB_CLIENT_ID     = "1d70f853d3989722eb52ae9fe9a561b140e4927f94828e86ea2a603a059a8720"
       AUTH_GITLAB_CLIENT_SECRET = "d06e894535f3d087decf44f90a68d4bde4583ec5b57cfe0baf8755a81951a76f"
