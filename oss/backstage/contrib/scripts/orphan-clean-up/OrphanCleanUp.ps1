@@ -3,7 +3,8 @@
 Cleanes up orphaned entities for the provided Backstage URL, defaults to the local backend
 #>
 param(
-    [string]$backstageUrl = "http://localhost:7007"
+    #[string]$backstageUrl = "http://localhost:7007"
+    [string]$backstageUrl = "https://bs-webapp-dev.azurewebsites.net"
 )
 
 $orphanApiUrl = "$backstageUrl/api/catalog/entities?filter=metadata.annotations.backstage.io/orphan=true"
