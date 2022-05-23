@@ -30,7 +30,9 @@ RUN chmod +x /tmp/ssh_setup && \
 # Copy repo skeleton first, to avoid unnecessary docker cache invalidation.
 # The skeleton contains the package.json of each package in the monorepo,
 # and along with yarn.lock and the root package.json, that's enough to run yarn install.
-COPY ./dev-portals/bradescoders/yarn.lock ./dev-portals/bradescoders/packages/backend/ca/db.crt ./dev-portals/bradescoders/package.json ./dev-portals/bradescoders/packages/backend/dist/skeleton.tar.gz ./
+COPY ./dev-portals/bradescoders/yarn.lock ./dev-portals/bradescoders/package.json ./dev-portals/bradescoders/packages/backend/dist/skeleton.tar.gz ./
+RUN mkdir -p packages/backend/ca
+COPY ./dev-portals/bradescoders/packages/backend/ca/db.crt ./packages/backend/ca
 RUN tar xzf ./skeleton.tar.gz && rm ./skeleton.tar.gz
 
 #RUN yarn install --frozen-lockfile --production --network-timeout 300000 && rm -rf "$(yarn cache dir)"
