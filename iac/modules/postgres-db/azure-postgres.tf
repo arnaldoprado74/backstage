@@ -45,7 +45,7 @@ resource "azurerm_postgresql_firewall_rule" "fw0" {
 resource "azurerm_postgresql_database" "psqldb" {
   count  = contains(var.selected_providers, local.cloud_provider) ? 1 : 0
 
-  name                = join("-", [var.prefix, "db", var.environment])
+  name                = "backstage_plugin_catalog" #join("-", [var.prefix, "db", var.environment])
   resource_group_name = var.resource_group_name
   server_name         = one(azurerm_postgresql_server.psqlserver[*].name)
   charset             = "UTF8"
