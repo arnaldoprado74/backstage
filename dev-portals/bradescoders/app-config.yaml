@@ -58,6 +58,8 @@ backend:
         connection: 'postgresql://bsadmin@bs-srv-dev:Backstageportal22@bs-srv-dev.postgres.database.azure.com:5432/backstage_plugin_catalog?sslmode=require&sslrootcert=packages/backend/ca/db.crt'
       scaffolder:
         connection: 'postgresql://bsadmin@bs-srv-dev:Backstageportal22@bs-srv-dev.postgres.database.azure.com:5432/backstage_plugin_scaffolder?sslmode=require&sslrootcert=packages/backend/ca/db.crt'
+      auth:
+        connection: 'postgresql://bsadmin@bs-srv-dev:Backstageportal22@bs-srv-dev.postgres.database.azure.com:5432/backstage_plugin_auth?sslmode=require&sslrootcert=packages/backend/ca/db.crt'
   cache:
     store: memory
   cors:
