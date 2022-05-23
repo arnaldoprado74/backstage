@@ -55,7 +55,7 @@ backend:
           $file: ./packages/backend/ca/db.crt
     plugin:
       catalog:
-        connection: 'postgresql://bsadmin@bs-srv-dev:Backstageportal22@bs-srv-dev.postgres.database.azure.com:5432/backstage_plugin_catalog'
+        connection: 'postgresql://bsadmin@bs-srv-dev:Backstageportal22@bs-srv-dev.postgres.database.azure.com:5432/backstage_plugin_catalog?sslMode=require'
   cache:
     store: memory
   cors:
