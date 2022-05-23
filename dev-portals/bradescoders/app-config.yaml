@@ -53,6 +53,9 @@ backend:
       ssl:
         ca: # if you have a CA file and want to verify it you can uncomment this section
           $file: ./packages/backend/ca/db.crt
+    plugin:
+      catalog:
+        connection: 'postgresql://bsadmin@bs-srv-dev:Backstageportal22@bs-srv-dev.postgres.database.azure.com:5432/backstage_plugin_catalog'
   cache:
     store: memory
   cors:
