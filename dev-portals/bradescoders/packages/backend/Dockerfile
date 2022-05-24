@@ -44,6 +44,7 @@ COPY dev-portals/bradescoders/packages/backend/dist/bundle.tar.gz dev-portals/br
 RUN tar xzf bundle.tar.gz && rm bundle.tar.gz
 
 # finally copy static resources
+RUN mkdir -p ./static/bradesco/catalog-model
 COPY ./oss/backstage/packages/catalog-model/examples/* ./static/bradesco/catalog-model
 
 # copy plugins
