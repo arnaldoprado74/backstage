@@ -64,6 +64,16 @@ resource "azurerm_subnet" "subnet_b" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = var.enabled_ipv6 ? [var.subnets_B, var.subnets6_B] : [var.subnets_B]
   service_endpoints    = var.private_service_endpoints
+
+   delegation {
+    name = "delegation"
+    service_delegation {
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/action",
+      ]
+      name = "Microsoft.Web/serverFarms"
+    }
+  }
 }
 
 resource "azurerm_subnet_network_security_group_association" "subnet_b_sg" {

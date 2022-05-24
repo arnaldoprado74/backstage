@@ -189,6 +189,22 @@ catalog:
       #    groupFilter: securityEnabled eq false and mailEnabled eq true and groupTypes/any(c:c+eq+'Unified')
 
   locations:
+    # Backstage end-to-end tests of TechDocs
+    - type: file
+      target: ./cypress/e2e-fixture.catalog.info.yaml
+
+    # Backstage example templates
+    - type: file
+      target: ./plugins/scaffolder-backend/sample-templates/all-templates.yaml
+
+    # Example component for github-actions and TechDocs
+    - type: file
+      target: ./plugins/github-actions/examples/sample.yaml
+
+    # Example component for TechDocs
+    - type: file
+      target: ./plugins/techdocs-backend/examples/documented-component/catalog-info.yaml
+
     # Add a location here to ingest it, for example from a URL:
     #
     #     - type: url
@@ -202,54 +218,31 @@ catalog:
     # File locations are relative to the current working directory of the
     # backend, for example packages/backend/.
     # Local example data, file locations are relative to the backend process, typically `packages/backend`
-    - type: file
-      target: ../../examples/entities.yaml
 
-    # Backstage end-to-end tests of TechDocs
-    - type: file
-      target: ../../cypress/e2e-fixture.catalog.info.yaml
+    # Backstage example groups and users
+    #- type: file
+    #  target: ./static/bradesco/acme-corp.yaml
+    #  rules:
+    #    - allow: [User, Group]
 
     # Backstage example entities
     - type: file
-      target: ../catalog-model/examples/all.yaml
-
-    # Local example template
+      target: ./static/bradesco/catalog-model/all.yaml
+    # Backstage example Components
     - type: file
-      target: ../../examples/template/template.yaml
-      rules:
-        - allow: [Template]
-
-    # Backstage example templates
-    - type: file
-      target: ../../plugins/scaffolder-backend/sample-templates/all-templates.yaml
-
-    # Local example organizational data
-    - type: file
-      target: ../../examples/org.yaml
-
-    # Backstage example groups and users
-    - type: file
-      target: ../catalog-model/examples/acme-corp.yaml
-      rules:
-        - allow: [User, Group]
-    # Example component for github-actions and TechDocs
-    - type: file
-      target: ../../plugins/github-actions/examples/sample.yaml
-    # Example component for TechDocs
-    - type: file
-      target: ../../plugins/techdocs-backend/examples/documented-component/catalog-info.yaml
+      target: ./static/bradesco/catalog-model/all-components.yaml
     # Backstage example APIs
     - type: file
-      target: ../catalog-model/examples/all-apis.yaml
+      target: ./static/bradesco/catalog-model/all-apis.yaml
     # Backstage example resources
     - type: file
-      target: ../catalog-model/examples/all-resources.yaml
+      target: ./static/bradesco/catalog-model/all-resources.yaml
     # Backstage example domains
     - type: file
-      target: ../catalog-model/examples/all-domains.yaml
+      target: ./static/bradesco/catalog-model/all-domains.yaml
     # Backstage example systems
     - type: file
-      target: ../catalog-model/examples/all-systems.yaml
+      target: ./static/bradesco/catalog-model/all-systems.yaml
 
 scaffolder:
   # Use to customize default commit author info used when new components are created

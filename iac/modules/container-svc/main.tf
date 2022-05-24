@@ -53,11 +53,11 @@ resource "azurerm_app_service" "webapp_container" {
     always_on         = "true"
     linux_fx_version  = join("", ["DOCKER|", var.image_path]) #define the images to use for you application
     health_check_path = var.health_check_path # healthD check required in order that internal app service plan loadbalancer do not loadbalance on instance down
-    ip_restriction {
-     virtual_network_subnet_id = var.subnet_id
-     name = "BASE VNET"
-     priority =  65000
-    }
+    # ip_restriction {
+    #  virtual_network_subnet_id = var.subnet_id
+    #  name = "BASE VNET"
+    #  priority =  65000
+    # }
     ip_restriction {
       ip_address = "201.26.103.81/32"
       name = "ANP"
@@ -148,8 +148,8 @@ resource "azurerm_app_service" "webapp_container" {
 #   }
 # }
 
-# resource "azurerm_app_service_virtual_network_swift_connection" "swift_app_service" {   # VNET association to access private resources
-#   app_service_id = azurerm_app_service.webapp_container.id
-#   subnet_id      = azurerm_subnet.sw-remote-subnet-lnk.id
-# }
+resource "azurerm_app_service_virtual_network_swift_connection" "swift_app_service" {   # VNET association to access private resources
+  app_service_id = azurerm_app_service.webapp_container.id
+  subnet_id      = var.subnet_id
+}
 
