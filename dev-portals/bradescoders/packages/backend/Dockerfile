@@ -15,10 +15,11 @@ WORKDIR /app
 
 # install sqlite3 dependencies, you can skip this if you don't use sqlite3 in the image
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libsqlite3-dev python3 build-essential openssh-server supervisor && \
+    apt-get install -y --no-install-recommends libsqlite3-dev python3 build-essential openssh-server supervisor gcc musl-dev openjdk-11-jdk curl graphviz fonts-dejavu fontconfig plantuml pip && \
     echo "root:Docker!" | chpasswd && \
     rm -rf /var/lib/apt/lists/* && \
-    yarn config set python /usr/bin/python3
+    yarn config set python /usr/bin/python3 && \
+    pip install --upgrade pip && pip install mkdocs-techdocs-core==1.0.2
 
 # Azure SSH
 COPY dev-portals/bradescoders/packages/backend/sshd_config /etc/ssh/
@@ -46,5 +47,4 @@ COPY ./dev-portals/bradescoders/packages/backend/supervisord.conf /etc/
 
 EXPOSE 7007 2222
 
-#CMD [ "node", "packages/backend", "--config", "app-config.yaml"]
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
