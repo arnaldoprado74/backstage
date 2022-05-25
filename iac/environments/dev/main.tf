@@ -110,7 +110,7 @@ module "postgres-db-backstage" {
   psql_storage_backup_rd            = 7 # retention days
   psql_storage_backup_geor          = false
   psql_ssl_enforcement              = true
-  subnet_id                         = one(module.networking[*].subnet-B-id)
+  subnet_id                         = one(module.networking[*].subnet-C-id)
   allowed_external_access_addresses = module.envvars.allowed_external_access_addresses
 }
 

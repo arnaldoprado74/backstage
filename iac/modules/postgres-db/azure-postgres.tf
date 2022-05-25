@@ -51,3 +51,17 @@ resource "azurerm_postgresql_database" "psqldb" {
   charset             = "UTF8"
   collation           = "English_United States.1252"
 }
+
+resource "azurerm_private_endpoint" "db-vnet-endpoint" {
+  name                = join("-", [one(azurerm_postgresql_database.psqldb[*].name), "vnet-endpoint"])
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  subnet_id           = var.subnet_id
+
+  private_service_connection {
+    name                           = join("-", [one(azurerm_postgresql_database.psqldb[*].name), "privateserviceconnection"])
+    private_connection_resource_id = one(azurerm_postgresql_server.psqlserver[*].id)
+    subresource_names              = [ "postgresqlServer" ]
+    is_manual_connection           = false
+  }
+}

@@ -4,6 +4,9 @@ output "subnet-A-id" {
 output "subnet-B-id" {
   value = azurerm_subnet.subnet_b.id
 }
+output "subnet-C-id" {
+  value = azurerm_subnet.subnet_c.id
+}
 output "vnet-name" {
   value = azurerm_virtual_network.vnet.name
 }
