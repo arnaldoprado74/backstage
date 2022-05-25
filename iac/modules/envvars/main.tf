@@ -11,7 +11,7 @@ locals {
             tenant_user_object_id               = "0b41c045-49d6-489d-9e0f-efea3cc96716"
             admin_user                          = "admin@arnaldopradohotmail.onmicrosoft.com" # this user will be created
             allowed_external_access_addresses   = [  # for services as keyvault, db, <others>
-                "201.26.103.81/32"                   # home anp              (use a curl ifconfig.me to get it)
+                "179.100.1.96/32"                    # home anp              (use a curl ifconfig.me to get it)
             ]
             external_registry_url               = "ghcr.io"
             external_registry_username          = "arnaldo.prado74"

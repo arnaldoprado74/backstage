@@ -19,7 +19,11 @@ variable "company_name" {
 variable "admin_user" {
   type = string
 }
-variable "subnet_id" {
+variable "swift_subnet_id" {
+  type = string
+}
+
+variable "inbound_subnet_id" {
   type = string
 }
 
@@ -56,4 +60,13 @@ variable "external_registry_username" {
 variable "external_registry_password" {
   type = string
   sensitive = true
+}
+
+variable "allowed_external_access_addresses" {
+  type = list
+}
+
+variable "server_name" {
+  type = string
+  default = null
 }

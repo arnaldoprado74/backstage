@@ -113,7 +113,7 @@ module "postgres-db-backstage" {
   subnet_id                         = one(module.networking[*].subnet-C-id)
   allowed_external_access_addresses = module.envvars.allowed_external_access_addresses
 }
-
+  
 module "container-registry" {
   count  = join("-", [module.envvars.WKSP_INFRA, module.envvars.environment]) == terraform.workspace ? 1 : 0
   source = "../../modules/container-registry" 
@@ -159,7 +159,8 @@ module "container-service" {
   location                  = module.envvars.location
   company_name              = module.envvars.company_name
   admin_user                = module.envvars.admin_user
-  subnet_id                 = one(module.networking[*].subnet-B-id)
+  swift_subnet_id           = one(module.networking[*].subnet-B-id)
+  inbound_subnet_id         = one(module.networking[*].subnet-C-id)
   service_env               = {
       POSTGRES_HOST             = one(module.postgres-db-backstage[*].server_endpoint_ip) #one(module.postgres-db-backstage[*].server_name)
       POSTGRES_PORT             = one(module.postgres-db-backstage[*].server_port)
@@ -173,12 +174,15 @@ module "container-service" {
       GITLAB_TOKEN              = "glpat-jsiH3f7HGUn3tW2GxGJu"
       GITHUB_TOKEN              = data.azurerm_key_vault_secret.github_token.value
   }
-  service_port               = 7007
-  image_path                 = "ghcr.io/arnaldoprado74/backstage-be:latest"
-  health_check_path          = "/healthcheck"
-  external_registry_url      = module.envvars.external_registry_url
-  external_registry_username = module.envvars.external_registry_username
-  external_registry_password = data.azurerm_key_vault_secret.github_cr_pat.value
+  service_port                      = 7007
+  image_path                        = "ghcr.io/arnaldoprado74/backstage-be:latest"
+  health_check_path                 = "/healthcheck"
+  external_registry_url             = module.envvars.external_registry_url
+  external_registry_username        = module.envvars.external_registry_username
+  external_registry_password        = data.azurerm_key_vault_secret.github_cr_pat.value
+  allowed_external_access_addresses = module.envvars.allowed_external_access_addresses
+  /* optional */
+  server_name                       = one(module.postgres-db-backstage[*].server_name)
 }
 
 module "container-service-fe" {
@@ -192,14 +196,16 @@ module "container-service-fe" {
   location                  = module.envvars.location
   company_name              = module.envvars.company_name
   admin_user                = module.envvars.admin_user
-  subnet_id                 = one(module.networking[*].subnet-B-id)
+  swift_subnet_id           = one(module.networking[*].subnet-B-id)
+  inbound_subnet_id         = one(module.networking[*].subnet-C-id)
   service_env               = {
     BACKEND_SECRET            = local.BACKEND_SECRET
   }
-  service_port              = 3000
-  image_path                = "ghcr.io/arnaldoprado74/backstage-fe:latest"
-  health_check_path         = "/healthcheck"
-  external_registry_url      = module.envvars.external_registry_url
-  external_registry_username = module.envvars.external_registry_username
-  external_registry_password = data.azurerm_key_vault_secret.github_cr_pat.value
+  service_port                      = 3000
+  image_path                        = "ghcr.io/arnaldoprado74/backstage-fe:latest"
+  health_check_path                 = "/healthcheck"
+  external_registry_url             = module.envvars.external_registry_url
+  external_registry_username        = module.envvars.external_registry_username
+  external_registry_password        = data.azurerm_key_vault_secret.github_cr_pat.value
+  allowed_external_access_addresses = module.envvars.allowed_external_access_addresses
 }

@@ -29,7 +29,10 @@
 
 FROM nginx:mainline
 
-RUN apt-get update && apt-get -y install jq openssh-server && rm -rf /var/lib/apt/lists/* && echo "root:Docker!" | chpasswd
+RUN apt-get update && \
+    apt-get -y install jq openssh-server supervisor && \
+    rm -rf /var/lib/apt/lists/* && \
+    echo "root:Docker!" | chpasswd
 
 COPY dev-portals/bradescoders/packages/app/dist /usr/share/nginx/html
 COPY dev-portals/bradescoders/docker/default.conf.template /etc/nginx/templates/default.conf.template
@@ -42,6 +45,11 @@ RUN mkdir -p /tmp
 COPY dev-portals/bradescoders/packages/backend/ssh_setup /tmp
 RUN chmod +x /tmp/ssh_setup && \
     (sleep 1; /tmp/ssh_setup 2>&1 > /dev/null)
-EXPOSE 2222
 
-ENV PORT 3000
+# copy process manager config
+COPY ./dev-portals/bradescoders/packages/app/supervisord-app.conf /etc/supervisord.conf
+
+EXPOSE 3000 2222
+#ENV PORT 3000
+
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]

@@ -1,5 +1,5 @@
 output "server_name" {
-  value = one(azurerm_postgresql_server.psqlserver[*].fqdn)
+  value = one(azurerm_postgresql_server.psqlserver[*].name)
 }
 
 output "server_port" {

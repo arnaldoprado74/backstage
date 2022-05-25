@@ -53,103 +53,32 @@ resource "azurerm_app_service" "webapp_container" {
     always_on         = "true"
     linux_fx_version  = join("", ["DOCKER|", var.image_path]) #define the images to use for you application
     health_check_path = var.health_check_path # healthD check required in order that internal app service plan loadbalancer do not loadbalance on instance down
-    # ip_restriction {
-    #  virtual_network_subnet_id = var.subnet_id
-    #  name = "BASE VNET"
-    #  priority =  65000
-    # }
     ip_restriction {
-      ip_address = "201.26.103.81/32"
+      ip_address = var.allowed_external_access_addresses[0]
       name = "ANP"
       priority =  300
+    }
+    ip_restriction {
+     virtual_network_subnet_id = var.inbound_subnet_id
+     name = "Inbound VNET"
+     priority =  65000
     }
   }
 
   app_settings = local.envariables 
 }
 
-# data "azurerm_virtual_network" "swift-vnet" {
-#   name                = join("-", ["vnet", var.environment])
-#   resource_group_name = var.resource_group_name
-# }
-
-# data "azurerm_subnet" "swift-subnet" {
-#   name                 = var.subnet_name
-#   virtual_network_name = data.azurerm_virtual_network.swift-vnet.name
-#   resource_group_name  = var.resource_group_name
-# }
-
-# data "azurerm_virtual_network_gateway" "swift-gw" {
-#   name                = join("-", ["vpn-net-gw", var.environment])
-#   resource_group_name = var.resource_group_name
-# }
-
-# requirements to join another region
-# resource "azurerm_virtual_network" "sw-remote-vnet" {
-#   name                = join("-", ["sw-remote-vnet", var.environment])
-#   location            =var.location
-#   resource_group_name = var.resource_group_name
-#   address_space       = [replace(data.azurerm_virtual_network.swift-vnet.address_space[0], "/^([0-9]+)\\./", "10.")]
-# }
-
-# resource "azurerm_subnet" "sw-remote-subnet" {
-#   name                 = "GatewaySubnet"
-#   resource_group_name  = var.resource_group_name
-#   virtual_network_name = azurerm_virtual_network.sw-remote-vnet.name
-#   address_prefixes     = [replace(data.azurerm_subnet.swift-subnet.address_prefixes[0], "/^([0-9]+)\\./", "10.")]
-# }
-
-# resource "azurerm_subnet" "sw-remote-subnet-lnk" {
-#   name                 = join("-", ["sw-subnet-lnk", var.environment])
-#   resource_group_name  = var.resource_group_name
-#   virtual_network_name = azurerm_virtual_network.sw-remote-vnet.name
-#   address_prefixes     = [  replace( 
-#                               replace(data.azurerm_virtual_network.swift-vnet.address_space[0], "/^([0-9]+)\\./", "10."),
-#                               "/(\\/.*)$/",
-#                               "/23")
-#                           ]
-# delegation {
-#     name = "delegation"
-#     service_delegation {
-#       actions = [
-#         "Microsoft.Network/virtualNetworks/subnets/action",
-#       ]
-#       name    = "Microsoft.Web/serverFarms"
-#     }
-#   }
-# }
-
-# resource "azurerm_public_ip" "sw-remote-ip" {
-#   name                = join("-", ["sw-remote-ip", var.environment])
-#   location            = var.location
-#   resource_group_name = var.resource_group_name
-#   allocation_method   = "Dynamic"
-# }
-
-# data "azurerm_subnet" "appgw-subnet" {
-#   name                 = join("_", ["subnet-appgw", var.environment])
-#   virtual_network_name = data.azurerm_virtual_network.swift-vnet.name
-#   resource_group_name  = var.resource_group_name
-# }
-
-# resource "azurerm_virtual_network_gateway" "sw-remote-gw" {
-#   name                = join("-", ["sw-remote-gw", var.environment])
-#   location            = var.location
-#   resource_group_name = var.resource_group_name
-
-#   type     = "Vpn"
-#   vpn_type = "RouteBased"
-#   sku      = "Basic"
-
-#   ip_configuration {
-#     public_ip_address_id          = azurerm_public_ip.sw-remote-ip.id
-#     private_ip_address_allocation = "Dynamic"
-#     subnet_id                     = azurerm_subnet.sw-remote-subnet.id
-#   }
-# }
-
 resource "azurerm_app_service_virtual_network_swift_connection" "swift_app_service" {   # VNET association to access private resources
   app_service_id = azurerm_app_service.webapp_container.id
-  subnet_id      = var.subnet_id
+  subnet_id      = var.swift_subnet_id
 }
 
+resource "azurerm_postgresql_firewall_rule" "fw_db" {
+  count = length(var.server_name != null ? one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list) : [])
+
+  name                = join("-", [var.prefix, replace(one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list)[count.index],".","")])
+  resource_group_name = var.resource_group_name
+  server_name         = var.server_name
+  start_ip_address    = one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list[count.index])
+  end_ip_address      = one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list[count.index])
+}
