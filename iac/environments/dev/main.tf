@@ -161,7 +161,7 @@ module "container-service" {
   admin_user                = module.envvars.admin_user
   subnet_id                 = one(module.networking[*].subnet-B-id)
   service_env               = {
-      POSTGRES_HOST             = one(module.postgres-db-backstage[*].server_name)
+      POSTGRES_HOST             = one(module.postgres-db-backstage[*].server_endpoint_ip) #one(module.postgres-db-backstage[*].server_name)
       POSTGRES_PORT             = one(module.postgres-db-backstage[*].server_port)
       POSTGRES_USER             = "bsadmin@bs-srv-dev" #one(module.postgres-db-backstage[*].admin_username)
       POSTGRES_PASSWORD         = module.envvars.core_db_pass

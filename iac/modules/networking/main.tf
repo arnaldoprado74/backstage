@@ -102,16 +102,6 @@ resource "azurerm_subnet" "subnet_c" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = var.enabled_ipv6 ? [var.subnets_C, var.subnets6_C] : [var.subnets_C]
   service_endpoints    = setunion(var.private_service_endpoints, ["Microsoft.Sql"])
-
-  #  delegation {
-  #   name = "delegation"
-  #   service_delegation {
-  #     actions = [
-  #       "Microsoft.Network/virtualNetworks/subnets/action",
-  #     ]
-  #     name = "Microsoft.Web/serverFarms"
-  #   }
-  # }
 }
 
 resource "azurerm_subnet_network_security_group_association" "subnet_c_sg" {
