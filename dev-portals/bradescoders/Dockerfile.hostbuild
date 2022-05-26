@@ -45,11 +45,12 @@ RUN mkdir -p /tmp
 COPY dev-portals/bradescoders/packages/backend/ssh_setup /tmp
 RUN chmod +x /tmp/ssh_setup && \
     (sleep 1; /tmp/ssh_setup 2>&1 > /dev/null)
-
 # copy process manager config
-COPY ./dev-portals/bradescoders/packages/app/supervisord-app.conf /etc/supervisord.conf
+
+COPY ./dev-potals/bradescoders/packages/app/supervisord-app.conf /etc/supervisord.conf
 
 EXPOSE 3000 2222
-#ENV PORT 3000
+
+ENV PORT 3000
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
