@@ -42,6 +42,6 @@ RUN mkdir -p /tmp
 COPY oss/backstage/packages/backend/ssh_setup /tmp
 RUN chmod +x /tmp/ssh_setup && \
     (sleep 1; /tmp/ssh_setup 2>&1 > /dev/null)
-EXPOSE 2222
+EXPOSE 3000 2222
 
 ENV PORT 3000
