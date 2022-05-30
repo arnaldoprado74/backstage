@@ -66,10 +66,6 @@ jobs:
         with:
           node-version: '16'
       
-      # - run: npm --prefix oss/backstage install --global yarn
-      # - run: yarn -W --cwd oss/backstage install
-      # - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd oss/backstage tsc
-      # - run: yarn -W --cwd oss/backstage build
       - run: npm --prefix dev-portals/bradescoders install --global yarn
       - run: yarn -W --cwd dev-portals/bradescoders install
       - run: NODE_OPTIONS="--max-old-space-size=5120" yarn -W --cwd dev-portals/bradescoders tsc

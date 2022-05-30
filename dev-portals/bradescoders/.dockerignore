@@ -4,3 +4,4 @@ packages/*/src
 packages/*/node_modules
 plugins
 *.local.yaml
+!packages/app/dist
