@@ -1,5 +1,5 @@
 server {
-    listen       $PORT;
+    listen       $WEBSITES_PORT;
     server_name  localhost;
 
     #charset koi8-r;
