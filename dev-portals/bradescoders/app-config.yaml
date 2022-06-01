@@ -1,7 +1,6 @@
 app:
-  title: Backstage Bradesco App
-  #baseUrl: http://localhost:3000
-  baseUrl: http://0.0.0.0:3000 # https://bsfe-webapp-dev.azurewebsites.net
+  title: Backstage Front App
+  baseUrl: https://bsfe-webapp-dev.azurewebsites.net # http://0.0.0.0:3000
 
 organization:
   name: Bradesco
@@ -31,7 +30,7 @@ backend:
       - secret: ${BACKEND_SECRET}
 
   baseUrl: https://bs-webapp-dev.azurewebsites.net
-  listen:
+  listen: # local only
     host: 0.0.0.0
     port: 7007
   database:
@@ -263,7 +262,7 @@ auth:
   #    projectId: my-project
   #    path: my-sessions
 
-#  environment: development
+  environment: production # development or production
   ### Providing an auth.session.secret will enable session support in the auth-backend
   # session:
   #   secret: custom session secret
