@@ -66,7 +66,7 @@ variable "allowed_external_access_addresses" {
   type = list
 }
 
-variable "server_name" {
+variable "db_server_name" {
   type = string
   default = null
 }

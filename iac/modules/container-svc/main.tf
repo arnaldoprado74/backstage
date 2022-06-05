@@ -42,6 +42,8 @@ resource "azurerm_app_service_plan" "webapp_plan" {
 }
 
 resource "azurerm_app_service" "webapp_container" {
+  count  = contains(var.selected_providers, local.cloud_provider) ? 1 : 0
+  
   name                    = local.app_name
   location                = var.location
   resource_group_name     = var.resource_group_name
@@ -69,16 +71,20 @@ resource "azurerm_app_service" "webapp_container" {
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "swift_app_service" {   # VNET association to access private resources
-  app_service_id = azurerm_app_service.webapp_container.id
+  app_service_id = one(azurerm_app_service.webapp_container[*].id)
   subnet_id      = var.swift_subnet_id
 }
 
 resource "azurerm_postgresql_firewall_rule" "fw_db" {
-  count = length(var.server_name != null ? one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list) : [])
+  count = length(var.db_server_name != null ? one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list) : [])
 
-  name                = join("-", [var.prefix, replace(one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list)[count.index],".","")])
+  name                = join("-", [var.prefix, replace(one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list[count.index]),".","")])
   resource_group_name = var.resource_group_name
-  server_name         = var.server_name
+  server_name         = var.db_server_name
   start_ip_address    = one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list[count.index])
   end_ip_address      = one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list[count.index])
+
+  depends_on = [
+    azurerm_app_service.webapp_container
+  ]
 }

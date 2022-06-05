@@ -182,7 +182,7 @@ module "container-service" {
   external_registry_password        = data.azurerm_key_vault_secret.github_cr_pat.value
   allowed_external_access_addresses = module.envvars.allowed_external_access_addresses
   /* optional */
-  server_name                       = one(module.postgres-db-backstage[*].server_name)
+  db_server_name                    = one(module.postgres-db-backstage[*].server_name)
 }
 
 module "container-service-fe" {
