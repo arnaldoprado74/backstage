@@ -1,6 +1,5 @@
 import React from 'react';
 import { Navigate, Route } from 'react-router';
-import { apis } from './apis';
 import AlarmIcon from '@material-ui/icons/Alarm';
 
 // @Backstage
@@ -40,14 +39,10 @@ import { ExplorePage } from '@backstage/plugin-explore';
 import { GraphiQLPage } from '@backstage/plugin-graphiql';
 import { HomepageCompositionRoot } from '@backstage/plugin-home';
 import { LighthousePage } from '@backstage/plugin-lighthouse';
-import { orgPlugin } from '@backstage/plugin-org';
 import { NewRelicPage } from '@backstage/plugin-newrelic';
-import { ReportIssue, TextSize } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { ScaffolderPage, scaffolderPlugin } from '@backstage/plugin-scaffolder';
 import { orgPlugin } from '@backstage/plugin-org';
 import { SearchPage } from '@backstage/plugin-search';
-import { TechRadarPage } from '@backstage/plugin-tech-radar';
-import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 
 import {
   TechDocsIndexPage,
@@ -56,7 +51,7 @@ import {
 } from '@backstage/plugin-techdocs';
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { TechRadarPage } from '@backstage/plugin-tech-radar';
-import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
+import { ReportIssue, TextSize } from '@backstage/plugin-techdocs-module-addons-contrib';
 import {
   UserSettingsPage,
   UserSettingsTab,
