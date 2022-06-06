@@ -4,10 +4,7 @@ import { apis } from './apis';
 import AlarmIcon from '@material-ui/icons/Alarm';
 
 // @Backstage
-import { createApp } from '@backstage/app-defaults';
-import { FlatRoutes } from '@backstage/core-app-api';
 import { gitlabAuthApiRef, githubAuthApiRef } from '@backstage/core-plugin-api';
-import { SignInPage, AlertDisplay, OAuthRequestDialog } from '@backstage/core-components';
 import {
   RELATION_API_CONSUMED_BY,
   RELATION_API_PROVIDED_BY,
@@ -25,13 +22,11 @@ import {
 import { ApacheAirflowPage } from '@backstage/plugin-apache-airflow';
 import { apiDocsPlugin, ApiExplorerPage } from '@backstage/plugin-api-docs';
 import { AzurePullRequestsPage } from '@backstage/plugin-azure-devops';
-import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 import {
   CatalogEntityPage,
   CatalogIndexPage,
   catalogPlugin,
 } from '@backstage/plugin-catalog';
-import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import {
   CatalogImportPage,
   catalogImportPlugin,
@@ -47,30 +42,40 @@ import { HomepageCompositionRoot } from '@backstage/plugin-home';
 import { LighthousePage } from '@backstage/plugin-lighthouse';
 import { orgPlugin } from '@backstage/plugin-org';
 import { NewRelicPage } from '@backstage/plugin-newrelic';
-import { PermissionedRoute } from '@backstage/plugin-permission-react';
 import { ReportIssue, TextSize } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { ScaffolderPage, scaffolderPlugin } from '@backstage/plugin-scaffolder';
+import { orgPlugin } from '@backstage/plugin-org';
 import { SearchPage } from '@backstage/plugin-search';
+import { TechRadarPage } from '@backstage/plugin-tech-radar';
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 
 import {
   TechDocsIndexPage,
   techdocsPlugin,
-  TechDocsReaderPage, 
+  TechDocsReaderPage,
 } from '@backstage/plugin-techdocs';
+import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { TechRadarPage } from '@backstage/plugin-tech-radar';
+import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 import {
   UserSettingsPage,
   UserSettingsTab,
 } from '@backstage/plugin-user-settings';
+import { apis } from './apis';
 
 // Components
 import { AdvancedSettings } from './components/advancedSettings';
 import { entityPage } from './components/catalog/EntityPage';
 import { homePage } from './components/home/HomePage';
-import { Root } from './components/Root';
 import { searchPage } from './components/search/SearchPage';
+import { Root } from './components/Root';
 import { techDocsPage } from './components/techdocs/TechDocsPage';
+import { SignInPage, AlertDisplay, OAuthRequestDialog } from '@backstage/core-components';
+import { createApp } from '@backstage/app-defaults';
+import { FlatRoutes } from '@backstage/core-app-api';
+import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
+import { PermissionedRoute } from '@backstage/plugin-permission-react';
+import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 
 const app = createApp({
   apis,
