@@ -75,16 +75,25 @@ resource "azurerm_app_service_virtual_network_swift_connection" "swift_app_servi
   subnet_id      = var.swift_subnet_id
 }
 
-resource "azurerm_postgresql_firewall_rule" "fw_db" {
-  count = length(var.db_server_name != null ? one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list) : [])
 
-  name                = join("-", [var.prefix, replace(one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list[count.index]),".","")])
-  resource_group_name = var.resource_group_name
-  server_name         = var.db_server_name
-  start_ip_address    = one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list[count.index])
-  end_ip_address      = one(azurerm_app_service.webapp_container[*].possible_outbound_ip_address_list[count.index])
+# data "azurerm_app_service" "webapp_ref" {
+#   name                = local.app_name
+#   resource_group_name = var.resource_group_name
 
-  depends_on = [
-    azurerm_app_service.webapp_container
-  ]
-}
+#   depends_on = [
+#     azurerm_app_service.webapp_container
+#   ]
+# }
+# resource "azurerm_postgresql_firewall_rule" "fw_db" {
+#   count = length(var.db_server_name != null ? data.azurerm_app_service.webapp_ref.possible_outbound_ip_address_list : [])
+
+#   name                = join("-", [var.prefix, replace(data.azurerm_app_service.webapp_ref.possible_outbound_ip_address_list[count.index],".","")])
+#   resource_group_name = var.resource_group_name
+#   server_name         = var.db_server_name
+#   start_ip_address    = data.azurerm_app_service.webapp_ref.possible_outbound_ip_address_list[count.index]
+#   end_ip_address      = data.azurerm_app_service.webapp_ref.possible_outbound_ip_address_list[count.index]
+
+#   depends_on = [
+#     data.azurerm_app_service.webapp_ref
+#   ]
+# }
