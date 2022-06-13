@@ -10,7 +10,9 @@
 # Once the commands have been run, you can build the image using `yarn build-image`
 
 #FROM node:16-bullseye-slim
-FROM mcr.microsoft.com/appsvc/node:10-lts
+#FROM mcr.microsoft.com/appsvc/node:10-lts
+FROM mcr.microsoft.com/azure-functions/node:4-node16
+
 
 #ENV HOST 0.0.0.0
 #ENV PORT 8080
@@ -19,12 +21,15 @@ FROM mcr.microsoft.com/appsvc/node:10-lts
 WORKDIR /app
 
 # install dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3 build-essential openssh-server supervisor gcc musl-dev openjdk-11-jdk curl graphviz fonts-dejavu fontconfig plantuml pip && \
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update && \
+    apt-get install -y --no-install-recommends python3 build-essential openssh-server supervisor gcc musl-dev openjdk-11-jdk curl graphviz fonts-dejavu fontconfig plantuml python3-pip yarn && \
     echo "root:Docker!" | chpasswd && \
     rm -rf /var/lib/apt/lists/* && \
-    yarn config set python /usr/bin/python3 && \
-    pip install --upgrade pip && pip install mkdocs-techdocs-core==1.0.2
+    pip install mkdocs-techdocs-core==1.0.2  && \
+    yarn config set python /usr/bin/python3 
+    #pip install --upgrade pip && pip install mkdocs-techdocs-core==1.0.2
 
 # azure SSH
 COPY dev-portals/bradescoders/packages/backend/sshd_config /etc/ssh/
@@ -43,6 +48,7 @@ RUN tar xzf ./skeleton.tar.gz && rm ./skeleton.tar.gz
 
 # install package.json deps
 RUN yarn install --frozen-lockfile --production --network-timeout 300000 && rm -rf "$(yarn cache dir)"
+#RUN yarn install && rm -rf "$(yarn cache dir)"
 
 # then copy the rest of the backend bundle, along with any other files we might want.
 COPY dev-portals/bradescoders/packages/backend/dist/bundle.tar.gz dev-portals/bradescoders/app-config.yaml ./
