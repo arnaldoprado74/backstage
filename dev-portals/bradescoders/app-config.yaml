@@ -24,7 +24,7 @@ backend:
   # information on the format
   auth:
     keys:
-      - secret: APPSETTING_${BACKEND_SECRET}
+      - secret: ${APPSETTING_BACKEND_SECRET}
 
   baseUrl: https://bs-webapp-dev.azurewebsites.net
   listen: # local only
@@ -46,10 +46,10 @@ backend:
   database:
     client: pg
     connection:
-      host: APPSETTING_${POSTGRES_HOST}
-      port: APPSETTING_${POSTGRES_PORT}
-      user: APPSETTING_${POSTGRES_USER}
-      password: APPSETTING_${POSTGRES_PASSWORD}
+      host: ${APPSETTING_POSTGRES_HOST}
+      port: ${APPSETTING_POSTGRES_PORT}
+      user: ${APPSETTING_POSTGRES_USER}
+      password: ${APPSETTING_POSTGRES_PASSWORD}
     knexConfig:
       pool:
         min: 3
@@ -82,7 +82,7 @@ integrations:
     - host: github.com
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
       # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
-      token: APPSETTING_${GITHUB_TOKEN}
+      token: ${APPSETTING_GITHUB_TOKEN}
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
     #   apiBaseUrl: https://ghe.example.net/api/v3
@@ -93,7 +93,7 @@ integrations:
     #   token: ${GHE_TOKEN}
   gitlab:
     - host: gitlab.com
-      token: APPSETTING_${GITLAB_TOKEN}
+      token: ${APPSETTING_GITLAB_TOKEN}
   # bitbucket:
   #   - host: bitbucket.org
   #     username: ${BITBUCKET_USERNAME}
@@ -105,7 +105,7 @@ integrations:
     #   appPassword: ${BITBUCKET_SERVER_APP_PASSWORD}
   azure:
     - host: dev.azure.com
-      token: APPSETTING_${AZURE_TOKEN}
+      token: ${APPSETTING_AZURE_TOKEN}
   #  googleGcs:
   #    clientEmail: 'example@example.com'
   #    privateKey: ${GCS_PRIVATE_KEY}
@@ -146,13 +146,13 @@ auth:
   providers:
     github:
       production:
-        clientId: APPSETTING_${AUTH_GITHUB_CLIENT_ID}
-        clientSecret: APPSETTING_${AUTH_GITHUB_CLIENT_SECRET}
+        clientId: ${APPSETTING_AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${APPSETTING_AUTH_GITHUB_CLIENT_SECRET}
     #     enterpriseInstanceUrl: ${AUTH_GITHUB_ENTERPRISE_INSTANCE_URL}
     gitlab:
       production:
-        clientId: APPSETTING_${AUTH_GITLAB_CLIENT_ID}
-        clientSecret: APPSETTING_${AUTH_GITLAB_CLIENT_SECRET}
+        clientId: ${APPSETTING_AUTH_GITLAB_CLIENT_ID}
+        clientSecret: ${APPSETTING_AUTH_GITLAB_CLIENT_SECRET}
         # audience: ${GITLAB_BASE_URL}
 
 sentry:
