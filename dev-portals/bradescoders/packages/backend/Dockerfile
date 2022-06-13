@@ -9,13 +9,8 @@
 #
 # Once the commands have been run, you can build the image using `yarn build-image`
 
-FROM node:16-bullseye-slim
-#FROM mcr.microsoft.com/appsvc/node:14-lts
-
-
-#ENV HOST 0.0.0.0
-#ENV PORT 8080
-#EXPOSE 8080
+#FROM node:16-bullseye-slim
+FROM mcr.microsoft.com/appsvc/node:14-lts
 
 WORKDIR /app
 
