@@ -9,16 +9,16 @@
 #
 # Once the commands have been run, you can build the image using `yarn build-image`
 
-#FROM node:16-bullseye-slim
-FROM mcr.microsoft.com/appsvc/node:14-lts
+#FROM node:16.15.0-slim
+FROM mcr.microsoft.com/appsvc/node:16-lts_20210810.1
 
 WORKDIR /app
 
 # install dependencies
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+RUN curl --insecure -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update && \
-    apt-get install -y --no-install-recommends python3 build-essential openssh-server supervisor gcc musl-dev openjdk-11-jdk curl graphviz fonts-dejavu fontconfig plantuml python3-pip yarn && \
+    apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false install -y --no-install-recommends python3 build-essential openssh-server supervisor gcc musl-dev openjdk-11-jdk curl graphviz fonts-dejavu fontconfig plantuml python3-pip yarn && \
     echo "root:Docker!" | chpasswd && \
     rm -rf /var/lib/apt/lists/* && \
     pip install mkdocs-techdocs-core==1.0.2  && \
