@@ -21,9 +21,8 @@ RUN curl --insecure -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
     apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false install -y --no-install-recommends python3 build-essential openssh-server supervisor gcc musl-dev openjdk-11-jdk curl graphviz fonts-dejavu fontconfig plantuml python3-pip yarn && \
     echo "root:Docker!" | chpasswd && \
     rm -rf /var/lib/apt/lists/* && \
-    pip install mkdocs-techdocs-core==1.0.2  && \
+    pip3 install mkdocs-techdocs-core==1.0.2  && \
     yarn config set python /usr/bin/python3 
-    #pip install --upgrade pip && pip install mkdocs-techdocs-core==1.0.2
 
 # azure SSH
 COPY dev-portals/bradescoders/packages/backend/sshd_config /etc/ssh/
