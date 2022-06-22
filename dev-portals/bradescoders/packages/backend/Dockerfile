@@ -21,7 +21,7 @@ RUN curl --insecure -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
     echo 'root:Docker!' | chpasswd && \
     rm -rf /var/lib/apt/lists/* && \
     yarn config set python /usr/bin/python3  && \
-    pip3 install uuid MarkupSafe watchdog mkdocs-techdocs-core==1.1.2
+    pip3 install mkdocs-techdocs-core==1.1.2
 
 # azure SSH
 COPY dev-portals/bradescoders/packages/backend/sshd_config /etc/ssh/
