@@ -39,7 +39,7 @@
     "@backstage/plugin-search-react": "^0.2.1",
     "@backstage/plugin-tech-radar": "^0.5.13",
     "@backstage/plugin-techdocs": "^1.2.0",
-    "@backstage/plugin-techdocs-backend": "^1.2.0",
+    "@backstage/plugin-techdocs-backend": "^1.1.2",
     "@backstage/plugin-techdocs-module-addons-contrib": "^1.0.1",
     "@backstage/plugin-techdocs-react": "^1.0.1",
     "@backstage/plugin-techdocs-module-addons-contrib": "^1.0.1",
