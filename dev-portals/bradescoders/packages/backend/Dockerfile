@@ -14,7 +14,8 @@ FROM mcr.microsoft.com/appsvc/node:16-lts_20210810.1
 WORKDIR /app
 
 # install dependencies
-RUN curl --insecure -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+RUN npm cache clean -f && npm install -g n && n 16.13.2 && \
+    curl --insecure -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo 'deb http://dl.yarnpkg.com/debian/ stable main' | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends python3 build-essential openssh-server supervisor gcc musl-dev curl graphviz fonts-dejavu fontconfig plantuml python3-pip python3-wheel yarn && \
