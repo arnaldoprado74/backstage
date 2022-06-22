@@ -14,14 +14,14 @@ FROM mcr.microsoft.com/appsvc/node:16-lts_20210810.1
 WORKDIR /app
 
 # install dependencies
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+RUN curl --insecure -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo 'deb http://dl.yarnpkg.com/debian/ stable main' | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update && \
-    apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false install -y --no-install-recommends python3 build-essential openssh-server supervisor gcc musl-dev curl graphviz fonts-dejavu fontconfig plantuml python3-pip python3-wheel yarn && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends python3 build-essential openssh-server supervisor gcc musl-dev curl graphviz fonts-dejavu fontconfig plantuml python3-pip python3-wheel yarn && \
     echo 'root:Docker!' | chpasswd && \
     rm -rf /var/lib/apt/lists/* && \
     yarn config set python /usr/bin/python3  && \
-    pip3 install uuid MarkupSafe watchdog mkdocs-techdocs-core==1.0.2
+    pip3 install uuid MarkupSafe watchdog mkdocs-techdocs-core==1.1.2
 
 # azure SSH
 COPY dev-portals/bradescoders/packages/backend/sshd_config /etc/ssh/
