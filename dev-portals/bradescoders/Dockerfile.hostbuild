@@ -29,7 +29,7 @@
 FROM mcr.microsoft.com/appsvc/node:16-lts_20220624.1
 
 RUN apt-get update && \
-    apt-get -y install jq openssh-server supervisor nginx && \
+    apt-get -y install jq openssh-server supervisor nginx gettext-base && \
     rm -rf /var/lib/apt/lists/* && \
     echo "root:Docker!" | chpasswd
 
