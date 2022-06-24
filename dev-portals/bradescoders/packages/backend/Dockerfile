@@ -9,7 +9,7 @@
 #
 # Once the commands have been run, you can build the image using `yarn build-image`
 
-FROM mcr.microsoft.com/appsvc/node:16-lts_20210810.1
+FROM mcr.microsoft.com/appsvc/node:16-lts_20210810.1 # 16-lts_20220624.1
 
 WORKDIR /app
 
