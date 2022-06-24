@@ -26,11 +26,10 @@
 #       docker build -t backstage-frontend -f Dockerfile.hostbuild .
 
 
-
-FROM nginx:mainline
+FROM mcr.microsoft.com/appsvc/node:16-lts_20220624.1
 
 RUN apt-get update && \
-    apt-get -y install jq openssh-server supervisor && \
+    apt-get -y install jq openssh-server supervisor nginx && \
     rm -rf /var/lib/apt/lists/* && \
     echo "root:Docker!" | chpasswd
 
@@ -52,7 +51,5 @@ COPY ./dev-portals/bradescoders/packages/app/supervisord-app.conf /etc/superviso
 EXPOSE 3000 2222
 
 ENV PORT 3000
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
