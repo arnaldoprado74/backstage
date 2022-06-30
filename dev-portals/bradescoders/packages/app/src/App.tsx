@@ -202,7 +202,6 @@ const routes = (
       path="/cost-insights/labeling-jobs"
       element={<CostInsightsLabelDataflowInstructionsPage />}
     />
-    /*Route path="/settings" element={<UserSettingsPage />}*/
     <Route path="/azure-pull-requests" element={<AzurePullRequestsPage />} />
     <Route path="/settings" element={<UserSettingsPage />}>
       <UserSettingsTab path="/advanced" title="Advanced">
