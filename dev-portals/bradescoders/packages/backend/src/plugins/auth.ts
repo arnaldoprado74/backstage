@@ -37,6 +37,20 @@ export default async function createPlugin(
       //   https://backstage.io/docs/auth/identity-resolver
       github: providers.github.create({
         signIn: {
+          // resolver(_, ctx) {
+          //   const userRef = 'user:default/guest'; // Must be a full entity reference
+          //   return ctx.issueToken({
+          //     claims: {
+          //       sub: userRef, // The user's own identity
+          //       ent: [userRef], // A list of identities that the user claims ownership through
+          //     },
+          //   });
+          // },
+          resolver: providers.github.resolvers.usernameMatchingUserEntityName(),
+        },
+      }),
+      gitlab: providers.gitlab.create({
+        signIn: {
           resolver(_, ctx) {
             const userRef = 'user:default/guest'; // Must be a full entity reference
             return ctx.issueToken({
@@ -46,7 +60,6 @@ export default async function createPlugin(
               },
             });
           },
-          // resolver: providers.github.resolvers.usernameMatchingUserEntityName(),
         },
       }),
     },
