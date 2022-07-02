@@ -60,6 +60,7 @@ export default async function createPlugin(
             }
 
             return ctx.signInWithCatalogUser({ entityRef: { name: id } });
+          },
         },
       }),
     },
