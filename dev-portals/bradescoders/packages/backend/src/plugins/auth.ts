@@ -49,20 +49,20 @@ export default async function createPlugin(
           resolver: providers.github.resolvers.usernameMatchingUserEntityName(),
         },
       }),
-      gitlab: providers.gitlab.create({
-        signIn: {
-          resolver(info, ctx) {
-            const { result } = info;
+      // gitlab: providers.gitlab.create({
+      //   signIn: {
+      //     resolver(info, ctx) {
+      //       const { result } = info;
 
-            const id = result.fullProfile.username;
-            if (!id) {
-              throw new Error(`GitLab user profile does not contain a username`);
-            }
+      //       const id = result.fullProfile.username;
+      //       if (!id) {
+      //         throw new Error(`GitLab user profile does not contain a username`);
+      //       }
 
-            return ctx.signInWithCatalogUser({ entityRef: { name: id } });
-          },
-        },
-      }),
+      //       return ctx.signInWithCatalogUser({ entityRef: { name: id } });
+      //     },
+      //   },
+      // }),
     },
   });
 }
