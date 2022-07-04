@@ -8,7 +8,6 @@ import {
   AnyApiFactory,
   configApiRef,
   createApiFactory,
-  gitlabAuthApiRef,
 } from '@backstage/core-plugin-api';
 
 export const apis: AnyApiFactory[] = [
@@ -18,9 +17,4 @@ export const apis: AnyApiFactory[] = [
     factory: ({ configApi }) => ScmIntegrationsApi.fromConfig(configApi),
   }),
   ScmAuth.createDefaultApiFactory(),
-  createApiFactory({
-    api: scmAuthApiRef,
-    deps: { gitlabAuthApi: gitlabAuthApiRef, },
-    factory: ({ gitlabAuthApi }) => ScmAuth.forGitlab(gitlabAuthApi),
-  }),
 ];
