@@ -3,7 +3,7 @@ import { Navigate, Route } from 'react-router';
 import AlarmIcon from '@material-ui/icons/Alarm';
 
 // @Backstage
-import { gitlabAuthApiRef, githubAuthApiRef } from '@backstage/core-plugin-api';
+import { githubAuthApiRef } from '@backstage/core-plugin-api';
 import {
   RELATION_API_CONSUMED_BY,
   RELATION_API_PROVIDED_BY,
@@ -85,11 +85,6 @@ const app = createApp({
         <SignInPage
           {...props}
           providers={[{
-            id: 'gitlab-auth-provider',
-            title: 'GitLab',
-            message: 'Sign in using GitLab',
-            apiRef: gitlabAuthApiRef,
-            }, {
             id: 'github-auth-provider',
             title: 'GitHub',
             message: 'Sign in using GitHub',
