@@ -9,4 +9,15 @@ SyslogFacility 		DAEMON
 PasswordAuthentication 	yes
 PermitEmptyPasswords 	no
 PermitRootLogin 	yes
-Subsystem sftp internal-sftp
+#Subsystem sftp internal-sftp
+
+
+Include /etc/ssh/sshd_config.d/*.conf
+
+#LoginGraceTime 2m
+#SyslogFacility AUTH
+ChallengeResponseAuthentication no
+PrintMotd no
+AcceptEnv LANG LC_*
+# override default of no subsystems
+Subsystem	sftp	/usr/lib/openssh/sftp-server
