@@ -19,7 +19,7 @@ RUN npm cache clean -f && npm install -g n && n 16.13.2 && \
     curl --insecure -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo 'deb http://dl.yarnpkg.com/debian/ stable main' | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && \
-    apt-get install -y --no-install-recommends python3 build-essential openssh-server supervisor gcc musl-dev curl graphviz fonts-dejavu fontconfig plantuml python3-pip python3-wheel yarn && \
+    apt-get install --reinstall -y --no-install-recommends python3 build-essential openssh-server supervisor gcc musl-dev curl graphviz fonts-dejavu fontconfig plantuml python3-pip python3-wheel yarn && \
     echo 'root:Docker!' | chpasswd && \
     rm -rf /var/lib/apt/lists/* && \
     yarn config set python /usr/bin/python3  && \
