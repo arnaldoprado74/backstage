@@ -19,7 +19,7 @@ RUN npm cache clean -f && npm install -g n && n 16.13.2 && \
     curl --insecure -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo 'deb http://dl.yarnpkg.com/debian/ stable main' | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && \
-    apt-get install --reinstall -y --no-install-recommends python3 build-essential openssh-server supervisor gcc musl-dev curl graphviz fonts-dejavu fontconfig plantuml python3-pip python3-wheel yarn && \
+    apt-get install -y --no-install-recommends python3 build-essential supervisor gcc musl-dev curl graphviz fonts-dejavu fontconfig plantuml python3-pip python3-wheel yarn && \
     echo 'root:Docker!' | chpasswd && \
     rm -rf /var/lib/apt/lists/* && \
     yarn config set python /usr/bin/python3  && \
@@ -42,7 +42,7 @@ COPY ./dev-portals/bradescoders/packages/backend/ca/db.crt ./packages/backend/ca
 RUN tar xzf ./skeleton.tar.gz && rm ./skeleton.tar.gz
 
 # install package.json deps
-RUN yarn install --frozen-lockfile --production --network-timeout 300000 && rm -rf "$(yarn cache dir)"
+RUN yarn install --production --network-timeout 300000 && rm -rf "$(yarn cache dir)"
 #RUN yarn install && rm -rf "$(yarn cache dir)"
 
 # then copy the rest of the backend bundle, along with any other files we might want.
