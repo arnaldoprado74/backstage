@@ -9,7 +9,8 @@
 #
 # Once the commands have been run, you can build the image using `yarn build-image`
 
-FROM mcr.microsoft.com/appsvc/node:16-lts_20220624.1
+#FROM mcr.microsoft.com/appsvc/node:16-lts_20220624.1 # due MS remove
+FROM ghcr.io/arnaldoprado74/node:16-lts_20220624.1
 
 WORKDIR /app
 
